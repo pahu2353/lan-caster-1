@@ -18,6 +18,7 @@ To write a game with LAN-Caster, you should have a basic familiarity with python
 * Where to get it: https://github.com/dbakewel/lan-caster
 * File Organization
 * Running the Demo
+* Note: Change the first lien of run-demo.bat to CD /d "H:\Documents\APCS\lan-caster-main\" (or wherever you saved it)
 * Architecture:
   * Input data (Tiled): Maps and Tilesets
   * Processes
