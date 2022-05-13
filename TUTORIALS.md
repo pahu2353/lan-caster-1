@@ -4,7 +4,7 @@
 
 The following links and videos provide an overview of how to use LAN-Caster to build your own game. More will be added as content is created.
 
-## Python Basics
+## Python Basics lol
 
 To write a game with LAN-Caster, you should have a basic familiarity with python 3. The links below will help:
 
