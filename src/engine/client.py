@@ -554,6 +554,6 @@ class Client(dict):
             moveDestX -= self['mapOffset'][0]
             moveDestY -= self['mapOffset'][1]
             msgType = 'playerMove'
-            if btn3:
-                msgType = 'testPlayerJump'
+            # if btn3:
+            #     msgType = 'testPlayerJump'
             self['socket'].sendMessage({'type': msgType, 'moveDestX': moveDestX, 'moveDestY': moveDestY})
