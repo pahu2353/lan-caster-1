@@ -559,4 +559,4 @@ class Client(dict):
             self['socket'].sendMessage({'type': msgType, 'moveDestX': moveDestX, 'moveDestY': moveDestY}) 
 
 
-        # testing comment 
+        # testing comment awojfoawiejf
