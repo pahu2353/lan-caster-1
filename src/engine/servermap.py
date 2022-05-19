@@ -249,8 +249,8 @@ class ServerMap(engine.stepmap.StepMap):
         for attackable in self.findObject(type="player", returnAll=True):
             self.addAttackableTrigger(attackable)
 
-        self.addStepMethodPriority("trigger", "triggerHoldable", 10)
-        self.addStepMethodPriority("stepMapEnd", "stepMapEndHoldable", 89)
+        self.addStepMethodPriority("trigger", "triggerAttackable", 10)
+        self.addStepMethodPriority("stepMapEnd", "stepMapEndAttackable", 89)
 
     def addAttackableTrigger(self, attackable):
         """ATTACKABLE MECHANIC: copy holdable sprite and make it a trigger."""
@@ -269,7 +269,7 @@ class ServerMap(engine.stepmap.StepMap):
 
         # Save a reference in the trigger for the sprite that this trigger
         # will pick up.
-        attackableTrigger['holdableSprite'] = attackable
+        attackableTrigger['attackableSprite'] = attackable
 
         # add trigger to the triggers layer.
         self.addObject(attackableTrigger, objectList=self['triggers'])
@@ -290,9 +290,47 @@ class ServerMap(engine.stepmap.StepMap):
         if "holding" not in sprite:
             if "action" in sprite:
                 self.delSpriteAction(sprite)
-                self.pickupHoldable(attackableTrigger, sprite)
+                self.pickupAttackable(attackableTrigger, sprite)
             else:    
-                 self.setSpriteActionText(sprite, f"Available Action: Pick Up {attackableTrigger['holdableSprite']['name']}")
+                 self.setSpriteActionText(sprite, f"Available Action: Attack {attackableTrigger['attackableSprite']['name']}")
+                 
+    # def stepMapEndAttackable(self):
+    #     """HOLDABLE MECHANIC: stepMapEnd method.
+
+    #     Drop holdable if sprite has holding and action is requested by user.
+    #     """
+    #     for sprite in self['sprites']:
+    #         if "attacking" in sprite:         # CHANGE THIS 
+    #             if "action" in sprite:
+    #                 self.delSpriteAction(sprite)  # consume sprite action
+    #                 self.dropAttackable(sprite)
+    #             else:
+    #                 self.setSpriteActionText(sprite, f"Available Action: Drop {sprite['attacking']['name']}")
+
+    def pickupAttackable(self, attackableTrigger, sprite):
+        """HOLDABLE MECHANIC: sprite picks up holdable.
+
+        Add attributes to sprite: holding
+        """
+        attackable = attackableTrigger['attackableSprite']      # change this maybe
+        self.removeFollower(attackable,attackableTrigger)
+        self.removeObjectFromAllLayers(attackableTrigger)
+        self.removeObjectFromAllLayers(attackable)
+        sprite['holding'] = attackable
+
+    def dropHoldable(self, sprite):
+        """HOLDABLE MECHANIC: sprite drops holding at sprite's location.
+
+        Remove attributes from sprite: holding
+        """
+        attackable = sprite['attacking']
+        del sprite['attacking']
+
+        # put the dropped item at the feet of the sprite that was holding it.
+        self.setObjectLocationByAnchor(attackable, sprite['anchorX'], sprite['anchorY'])
+        self.delMoveLinear(attackable)
+        self.addObject(attackable, objectList=self['sprites'])
+        self.addHoldableTrigger(attackable)
 
     ########################################################
     # HOLDABLE MECHANIC
