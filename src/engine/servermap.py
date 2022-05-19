@@ -242,9 +242,61 @@ class ServerMap(engine.stepmap.StepMap):
             log(f"Trigger destination not found. {trigger['prop-destReference']}", "ERROR")
 
     ########################################################
-    # HOLDABLE MECHANIC
+    # ATTACKABLE MECHANIC
     ########################################################
 
+    def initAttackable(self):
+        for attackable in self.findObject(type="player", returnAll=True):
+            self.addAttackableTrigger(attackable)
+
+        self.addStepMethodPriority("trigger", "triggerHoldable", 10)
+        self.addStepMethodPriority("stepMapEnd", "stepMapEndHoldable", 89)
+
+    def addAttackableTrigger(self, attackable):
+        """ATTACKABLE MECHANIC: copy holdable sprite and make it a trigger."""
+        
+        # shallow copy attackable (sprite)
+        attackableTrigger = attackable.copy()
+
+        # change collisionType to 'rect' so sprites can collide with the trigger.
+        attackableTrigger['collisionType'] = 'rect'
+
+        # set doNotTrigger to be a list with just holdable. If this is not
+        # not done then holdable (sprite) will collide with trigger each
+        # step and set of the trigger each step. This stops that from
+        # happening.
+        attackableTrigger['doNotTrigger'] = [attackable]
+
+        # Save a reference in the trigger for the sprite that this trigger
+        # will pick up.
+        attackableTrigger['holdableSprite'] = attackable
+
+        # add trigger to the triggers layer.
+        self.addObject(attackableTrigger, objectList=self['triggers'])
+
+        # set trigger to follow sprite. If the sprites moves then
+        # so will the trigger.
+        self.addFollower(attackable, attackableTrigger)    
+
+    def triggerAttackable(self, attackableTrigger, sprite):
+        """HOLDABLE MECHANIC: trigger method.
+
+        The sprite's anchor is inside the trigger.
+
+        if the sprite is not holding anything now then:
+            1) pick up holdable if the sprite has requested an action else
+            2) tell the sprite the pick up action is possible.
+        """
+        if "holding" not in sprite:
+            if "action" in sprite:
+                self.delSpriteAction(sprite)
+                self.pickupHoldable(attackableTrigger, sprite)
+            else:    
+                 self.setSpriteActionText(sprite, f"Available Action: Pick Up {attackableTrigger['holdableSprite']['name']}")
+
+    ########################################################
+    # HOLDABLE MECHANIC
+    #######################################################
     def initHoldable(self):
         """HOLDABLE MECHANIC: init method.
 
@@ -256,11 +308,12 @@ class ServerMap(engine.stepmap.StepMap):
 
         for holdable in self.findObject(type="holdable", returnAll=True):
             self.addHoldableTrigger(holdable)
+            
+        
 
         self.addStepMethodPriority("trigger", "triggerHoldable", 10)
         self.addStepMethodPriority("stepMapEnd", "stepMapEndHoldable", 89)
-
-    def triggerHoldable(self, holdableTrigger, sprite):
+        
         """HOLDABLE MECHANIC: trigger method.
 
         The sprite's anchor is inside the trigger.
@@ -339,6 +392,22 @@ class ServerMap(engine.stepmap.StepMap):
         # set trigger to follow sprite. If the sprites moves then
         # so will the trigger.
         self.addFollower(holdable, holdableTrigger)
+
+    def triggerHoldable(self, holdableTrigger, sprite):
+        """HOLDABLE MECHANIC: trigger method.
+
+        The sprite's anchor is inside the trigger.
+
+        if the sprite is not holding anything now then:
+            1) pick up holdable if the sprite has requested an action else
+            2) tell the sprite the pick up action is possible.
+        """
+        if "holding" not in sprite:
+            if "action" in sprite:
+                self.delSpriteAction(sprite)
+                self.pickupHoldable(holdableTrigger, sprite)
+            else:
+                self.setSpriteActionText(sprite, f"Available Action: Pick Up {holdableTrigger['holdableSprite']['name']}")
 
     ########################################################
     # ACTION MECHANIC

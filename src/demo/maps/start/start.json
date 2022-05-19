@@ -175,7 +175,34 @@
                  "x":562,
                  "y":419.333333333333
                 }, 
+
                 {
+                     "gid":1262,
+                     "height":80,
+                     "id":8,
+                     "name":"",
+                     "rotation":0,
+                     "type":"player",
+                     "visible":true,
+                     "width":32,
+                     "x":562,
+                     "y":419.333333333333
+                    }, 
+
+                    {
+                     "gid":1262,
+                     "height":100,
+                     "id":8,
+                     "name":"",
+                     "rotation":0,
+                     "type":"player",
+                     "visible":true,
+                     "width":32,
+                     "x":562,
+                     "y":419.333333333333
+                    }, 
+                {
+                       
                  "gid":1413,
                  "height":32,
                  "id":64,
