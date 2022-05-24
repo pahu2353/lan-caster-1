@@ -6,3 +6,4 @@ start "Client for Scout" cmd /K py -3 src/startclient.py -player "Scout"
 start "Client for River" cmd /K py -3 src/startclient.py -player "River"
 start "Client for PDADDY" cmd /K py -3 src/startclient.py -player "PDADDY"
 start "Client for PDADDY1" cmd /K py -3 src/startclient.py -player "PDADDY1"
+
