@@ -136,6 +136,18 @@
          "id":2,
          "name":"sprites",
          "objects":[
+                    {
+                 "gid":41,
+                 "height":32,
+                 "id":1,
+                 "name":"",
+                 "rotation":0,
+                 "type":"player",
+                 "visible":true,
+                 "width":32,
+                 "x":46.0950434338273,
+                 "y":61.6208482370976
+                },
                 {
                  "gid":41,
                  "height":32,
@@ -148,6 +160,7 @@
                  "x":46.0950434338273,
                  "y":61.6208482370976
                 }],
+                
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
