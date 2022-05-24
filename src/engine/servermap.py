@@ -1,12 +1,12 @@
 """ServerMap implements game mechanics."""
 
 from engine.log import log
+from time import perf_counter
 import engine.map
 import engine.geometry as geo
 import engine.time as time
 import engine.stepmap
 import engine.server
-
 
 class ServerMap(engine.stepmap.StepMap):
     """The ServerMap implements several basic game mechanics.
@@ -57,6 +57,7 @@ class ServerMap(engine.stepmap.StepMap):
     ########################################################
     # MOVE LINEAR MECHANIC
     ########################################################
+
 
     def stepMoveLinear(self, sprite):
         """MOVE LINEAR MECHANIC: stepMove method.
@@ -244,12 +245,13 @@ class ServerMap(engine.stepmap.StepMap):
     ########################################################
     # ATTACKABLE MECHANIC
     ########################################################
+
     def initAttackable(self):
         """ATTACKABLE MECHANIC: init method.
 
         attackable traits are automatically assigned to all players. 
         """
-
+        print(time.perf_counter())
         for attackable in self.findObject(type="player", returnAll=True):
             self.addAttackableTrigger(attackable)
 
@@ -266,9 +268,18 @@ class ServerMap(engine.stepmap.StepMap):
             1) pick up holdable if the sprite has requested an action else
             2) tell the sprite the pick up action is possible.
         """
+        reset = sprite['cooldown']
+
         if "attacked" not in sprite:
             if "action" in sprite:
-                print ("i just attacked the other mf " + str(attackableTrigger['attackableSprite']['name']) )
+                if time.perf_counter() - reset > 0.5:
+                
+                    attackableTrigger['attackableSprite']['health'] -= 1
+                    print ("i just attacked the other mf " + str(attackableTrigger['attackableSprite']['name']) ) 
+                    
+                    sprite['cooldown'] = time.perf_counter()
+                    
+
             else:
                 self.setSpriteActionText(sprite, f"Available Action: Attack {attackableTrigger['attackableSprite']['name']}")
 
@@ -277,6 +288,7 @@ class ServerMap(engine.stepmap.StepMap):
 
         Add attributes to sprite: attacked
         """
+
         attackable = attackableTrigger['attackableSprite']
         #self.removeFollower(attackable,attackableTrigger)
         #self.removeObjectFromAllLayers(holdableTrigger)
@@ -541,6 +553,8 @@ class ServerMap(engine.stepmap.StepMap):
         if 'labelText' in sprite:
             del sprite['labelText']
             self.setMapChanged()
+
+            
 
     ########################################################
     # PLAYER ACTION TEXT MECHANIC
