@@ -225,8 +225,16 @@ class StepMap(engine.map.Map):
         for sprite in self['sprites']:
             self.stepTriggers(sprite)
 
-            # CUSTOM CODE: displays hp every time stepmap is called 
+            # CUSTOM CODE: displays hp every time stepmap is called
+
+            
+            text = str(sprite['name']) + "\n"
+            text += str(sprite['health']) + "\n"
+            text += "Kills: " + str(sprite['kills']) + " - Deaths: " + str(sprite['deaths']) + "\n"
+            
+             
             self.setSpriteSpeechText(sprite, str(sprite['health']))
+            self.setSpriteMarqueeText(sprite, text)
 
         # call all selfstepMove*(sprite) methods for each sprite
         # with a corresponding sprite['move']['type']

@@ -251,6 +251,7 @@ class ServerMap(engine.stepmap.StepMap):
 
         attackable traits are automatically assigned to all players. 
         """
+
         print(time.perf_counter())
         for attackable in self.findObject(type="player", returnAll=True):
             self.addAttackableTrigger(attackable)
@@ -434,6 +435,7 @@ class ServerMap(engine.stepmap.StepMap):
         # set trigger to follow sprite. If the sprites moves then
         # so will the trigger.
         self.addFollower(holdable, holdableTrigger)
+        
 
     ########################################################
     # ACTION MECHANIC
