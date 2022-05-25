@@ -231,7 +231,7 @@ class StepMap(engine.map.Map):
             text = str(sprite['labelText']) + "\n"
             text += str(sprite['health']) + "\n"
             text += "Kills: " + str(sprite['kills']) + " - Deaths: " + str(sprite['deaths']) + "\n"
-            
+            text += "Attack ([space])"
              
             self.setSpriteSpeechText(sprite, str(sprite['health']))
             self.setSpriteMarqueeText(sprite, text)
