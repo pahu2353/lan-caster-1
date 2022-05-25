@@ -228,7 +228,7 @@ class StepMap(engine.map.Map):
             # CUSTOM CODE: displays hp every time stepmap is called
 
             
-            text = str(sprite['name']) + "\n"
+            text = str(sprite['labelText']) + "\n"
             text += str(sprite['health']) + "\n"
             text += "Kills: " + str(sprite['kills']) + " - Deaths: " + str(sprite['deaths']) + "\n"
             
