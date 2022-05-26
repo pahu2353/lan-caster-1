@@ -121,7 +121,9 @@
                  "health": 100,
                  "kills": 0,
                  "deaths": 0,
-                 "cooldown": 0
+                 "cooldown": 0,
+                 "respawn": 0,
+                 "life": 1
                 }, 
                 {
                  "gid":229,
@@ -137,7 +139,9 @@
                  "kills": 0,
                  "deaths": 0,
                  "health": 100,
-                 "cooldown": 0
+                 "cooldown": 0,
+                 "respawn": 0,
+                 "life": 1
                 }],
          "opacity":1,
          "type":"objectgroup",

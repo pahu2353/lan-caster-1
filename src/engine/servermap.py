@@ -270,7 +270,6 @@ class ServerMap(engine.stepmap.StepMap):
             2) tell the sprite the pick up action is possible.
         """
         reset = sprite['cooldown']
-        respawn = attackableTrigger['attackableSprite']['cooldown'] 
 
         if "attacked" not in sprite:
             if "action" in sprite:
@@ -280,23 +279,8 @@ class ServerMap(engine.stepmap.StepMap):
 
                     # is this a death?
                     if attackableTrigger['attackableSprite']['health'] <= 0:
-                        print (str(attackableTrigger['attackableSprite']['labelText']) + " has died")
-                        self.setSpriteMarqueeText(attackableTrigger['attackableSprite'], f"you're a shitter")
                         attackableTrigger['attackableSprite']['deaths'] += 1
                         sprite['kills'] += 1
-
-                        # add respawn timer (CURRENTLY BROKEN)
-                        if time.perf_counter() - respawn > 1:
-                            self.delSpriteMarqueeText(attackableTrigger['attackableSprite'])
-                            attackableTrigger['attackableSprite']['health'] = 100
-
-
-                            attackableTrigger['attackableSprite']['cooldown'] = time.perf_counter()
-                        log(attackableTrigger['attackableSprite'])
-                        log(sprite)
-
-
-
                     
 
                     print ("i just attacked the other mf " + str(attackableTrigger['attackableSprite']['name']) ) 
