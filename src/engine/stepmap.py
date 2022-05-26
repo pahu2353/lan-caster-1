@@ -233,7 +233,7 @@ class StepMap(engine.map.Map):
             self.health_bar_length = 400
             self.health_ratio = self.maximum_health / self.health_bar_length
 
-            # pygame.draw.rect(self["screen"], (255,0,0), (10,10,self.current_health/self.health_ratio,25))
+            pygame.draw.rect(self['screen'], (255,0,0), (10,10,self.current_health/self.health_ratio,25))
             
             text = str(sprite['labelText']) + "\n"
             text += str(sprite['health']) + "\n"
@@ -242,6 +242,24 @@ class StepMap(engine.map.Map):
              
             self.setSpriteSpeechText(sprite, str(sprite['health']))
             self.setSpriteHUDText(sprite, text)
+
+            respawn = sprite['respawn']
+
+            if sprite['health'] <= 0:
+                if sprite['life'] == 1:
+                    sprite['life'] = 0
+                    sprite['respawn'] = time.perf_counter()
+                    self.setSpriteMarqueeText(sprite, f"ur ded lol")
+                elif sprite['life'] == 0:
+                    if time.perf_counter() - respawn > 5:
+                        self.delSpriteMarqueeText(sprite)
+                        sprite['health'] = 100
+                        sprite['life'] = 1
+
+
+                    
+                   
+                
 
         # call all selfstepMove*(sprite) methods for each sprite
         # with a corresponding sprite['move']['type']
