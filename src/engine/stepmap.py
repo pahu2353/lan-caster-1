@@ -4,6 +4,7 @@ import engine.map
 import engine.geometry as geo
 import engine.time as time
 import engine.server
+import pygame, sys
 
 
 class StepMap(engine.map.Map):
@@ -227,6 +228,12 @@ class StepMap(engine.map.Map):
 
             # CUSTOM CODE: displays hp every time stepmap is called
 
+            self.current_health = str(sprite['health'])
+            self.maximum_health = 100
+            self.health_bar_length = 400
+            self.health_ratio = self.maximum_health / self.health_bar_length
+
+            # pygame.draw.rect(self["screen"], (255,0,0), (10,10,self.current_health/self.health_ratio,25))
             
             text = str(sprite['labelText']) + "\n"
             text += str(sprite['health']) + "\n"
