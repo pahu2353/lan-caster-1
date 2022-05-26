@@ -647,6 +647,9 @@ class Server(dict):
 
         if player['marqueeText']:
             msg['marqueeText'] = player['marqueeText']
+        
+        if player['hUDText']:
+            msg['hUDText'] = player['hUDText']
 
         return msg
 
@@ -732,6 +735,8 @@ class Server(dict):
             'playerNumber': sprite['playerNumber'],
             'actionText': False,  # set to false if not in use, rather than removing.
             'lastActionText': False,
+            'hUDText': False,
+            'lastHUDText': False,
             'marqueeText': False,
             'lastMarqueeText': False  # set to false if not in use, rather than removing.
             }
@@ -783,6 +788,25 @@ class Server(dict):
         """
         if playerNumber in self['playersByNum']:
             self['playersByNum'][playerNumber]['marqueeText'] = False
+    
+    def setPlayerHUDText(self, playerNumber, hUDText):
+        """Update the player's marqueeText to marqueeText.
+
+        Args:
+            playerNumber (int): A player's playerNumber
+            marqueeText (str): A string to display to the user in the marquee text box.
+        """
+        if playerNumber in self['playersByNum']:
+            self['playersByNum'][playerNumber]['hUDText'] = hUDText
+
+    def delPlayerHUDText(self, playerNumber):
+        """Update the player so they do not have any marqueeText.
+
+        Args:
+            playerNumber (int): A players playerNumber
+        """
+        if playerNumber in self['playersByNum']:
+            self['playersByNum'][playerNumber]['hUDText'] = False
 
     def resetPlayerChanged(self, player):
         """Update player so calls to self.getPlayerChanged will return False until the player is changed again.
@@ -792,6 +816,7 @@ class Server(dict):
         """
         player['lastActionText'] = player['actionText']
         player['lastMarqueeText'] = player['marqueeText']
+        player['lastHUDText'] = player['hUDText']
 
     def getPlayerChanged(self, player):
         """Return True if player has changed since last call to self.resetPlayerChanged() else returns False.
@@ -802,6 +827,6 @@ class Server(dict):
         Returns:
             boolean
         """
-        if player['lastActionText'] != player['actionText'] or player['lastMarqueeText'] != player['marqueeText']:
+        if player['lastActionText'] != player['actionText'] or player['lastMarqueeText'] != player['marqueeText'] or player['lastHUDText'] != player['hUDText']:
             return True
         return False

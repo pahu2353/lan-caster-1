@@ -234,7 +234,7 @@ class StepMap(engine.map.Map):
             text += "Attack ([space])"
              
             self.setSpriteSpeechText(sprite, str(sprite['health']))
-            self.setSpriteMarqueeText(sprite, text)
+            self.setSpriteHUDText(sprite, text)
 
         # call all selfstepMove*(sprite) methods for each sprite
         # with a corresponding sprite['move']['type']

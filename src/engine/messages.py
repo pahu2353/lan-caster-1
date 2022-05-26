@@ -59,7 +59,8 @@ class Messages(dict):
                 'layerVisabilityMask': 'int',
                 'sprites': 'list',
                 'actionText_o': ['str', 1, 256],
-                'marqueeText_o': ['str', 1, 512]
+                'marqueeText_o': ['str', 1, 512],
+                'hUDText_o': ['str', 1, 512]
                 },
             'Error': {
                 'result': 'str'

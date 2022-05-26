@@ -43,6 +43,9 @@ class ServerMap(engine.servermap.ServerMap):
         elif trigger['prop-textType'] == "marquee":
             self.setSpriteMarqueeText(sprite, trigger["prop-text"])
             # Marquee changes last until something else changes them.
+        elif trigger['prop-textType'] == "hUD":
+            self.setSpriteHUDText(sprite, trigger["prop-text"])
+            # Marquee changes last until something else changes them.
         else:
             log(f"addText trigger has unsupported textType property: {trigger['prop-textType']}", "WARNING")
 
@@ -52,3 +55,10 @@ class ServerMap(engine.servermap.ServerMap):
         Remove Marquee Text from player
         """
         self.delSpriteMarqueeText(sprite)
+
+    def triggerRemoveHUDText(self, trigger, sprite):
+        """TEXT MECHANIC: trigger method.
+
+        Remove Marquee Text from player
+        """
+        self.delSpriteHUDText(sprite)

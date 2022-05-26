@@ -24,5 +24,15 @@ class Client(engine.client.Client):
             "bgborderThickness": 6,
             "bgroundCorners": 12
             })
+        
+        self['HUDTEXT'].update({
+            'pixelsize': 36,
+            "fontfamily": "Old London",
+            "color": "#1d232b",
+            "bgcolor": "#fafacd",
+            "bgbordercolor": "#47361e",
+            "bgborderThickness": 6,
+            "bgroundCorners": 12
+            })
 
         log(f"Client __init__ complete. Client Attributes:{engine.log.dictToStr(self, 1)}", "VERBOSE")

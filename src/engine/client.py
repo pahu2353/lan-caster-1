@@ -124,6 +124,11 @@ class Client(dict):
             "halign": "center",
             "valign": "center"
             }
+        
+        self['HUDTEXT'] = {
+            "halign": "center",
+            "valign": "bottom"
+            }
 
         self['testMode'] = False  # True if server is in testMode. Server provides this in joinReply message.
 
@@ -443,6 +448,9 @@ class Client(dict):
 
         if 'marqueeText' in self['step']:
             self.blitMarqueeText(self['step']['marqueeText'])
+        
+        if 'hUDText' in self['step']:
+            self.blitHUDText(self['step']['hUDText'])
 
         if(self['testMode']):
             self.blitTestText()
@@ -470,6 +478,22 @@ class Client(dict):
         textObject = {
             'x': self['screen'].get_width() / 4,
             'y': self['screen'].get_height() / 4,
+            'width': self['screen'].get_width() / 2,
+            'height': self['screen'].get_height() / 2,
+            'text': text
+            }
+
+        # find the map that the server wants us to render.
+        map = self['maps'][self['step']['mapName']]
+        map.blitTextObject(self['screen'], (0, 0), textObject, mapRelative=False)
+    
+    def blitHUDText(self, hUDText):
+        """ Render marqueeText to screen. """
+        text = self['HUDTEXT'].copy()
+        text['text'] = hUDText
+        textObject = {
+            'x': self['screen'].get_width() / 4,
+            'y': self['screen'].get_height(),
             'width': self['screen'].get_width() / 2,
             'height': self['screen'].get_height() / 2,
             'text': text

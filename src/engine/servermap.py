@@ -628,3 +628,20 @@ class ServerMap(engine.stepmap.StepMap):
 
         if sprite['type'] == "player" and "playerNumber" in sprite:
             engine.server.SERVER.delPlayerMarqueeText(sprite['playerNumber'])
+
+    ########################################################
+    # PLAYER HUD TEXT MECHANIC
+    ########################################################
+
+    def setSpriteHUDText(self, sprite, hUDText):
+        """PLAYER MARQUEE TEXT MECHANIC: add marquee text to player linked to sprite."""
+
+        # if this is a sprite for a player that has joined the game.
+        if sprite['type'] == "player" and "playerNumber" in sprite:
+            engine.server.SERVER.setPlayerHUDText(sprite['playerNumber'], hUDText)
+
+    def delSpriteHUDText(self, sprite):
+        """PLAYER MARQUEE TEXT MECHANIC: remove marquee text from player linked to sprite."""
+
+        if sprite['type'] == "player" and "playerNumber" in sprite:
+            engine.server.SERVER.delPlayerHUDText(sprite['playerNumber'])
