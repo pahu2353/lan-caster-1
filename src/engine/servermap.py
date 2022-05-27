@@ -274,22 +274,22 @@ class ServerMap(engine.stepmap.StepMap):
         if "attacked" not in sprite:
             if "action" in sprite:
                 if time.perf_counter() - reset > 0.5:
-                
-                    attackableTrigger['attackableSprite']['health'] -= 20
-
-                    # is this a death?
-                    if attackableTrigger['attackableSprite']['health'] <= 0:
-                        attackableTrigger['attackableSprite']['deaths'] += 1
-                        sprite['kills'] += 1
+                    
+                    if attackableTrigger['attackableSprite']['health'] > 0:
+                        attackableTrigger['attackableSprite']['health'] -= 20
+                        if attackableTrigger['attackableSprite']['health'] <= 0:
+                            attackableTrigger['attackableSprite']['health'] = 0
+                            attackableTrigger['attackableSprite']['deaths'] += 1
+                            sprite['kills'] += 1
                     
 
-                    print ("i just attacked the other mf " + str(attackableTrigger['attackableSprite']['name']) ) 
+                    print ("i just attacked " + str(attackableTrigger['attackableSprite']['name']) ) 
                     
                     sprite['cooldown'] = time.perf_counter()
                     
                     
             else:
-                self.setSpriteActionText(sprite, f"Available Action: Attack {attackableTrigger['attackableSprite']['labelText']}")
+                self.setSpriteActionText(sprite, f"")
 
 
     def pickupAttackable(self, attackableTrigger, sprite):
@@ -629,3 +629,54 @@ class ServerMap(engine.stepmap.StepMap):
 
         if sprite['type'] == "player" and "playerNumber" in sprite:
             engine.server.SERVER.delPlayerHUDText(sprite['playerNumber'])
+
+    ########################################################
+    # RESPAWN POINT MECHANIC
+    ########################################################
+
+    def setSpriteLocationByRespawnPoint(self, sprite):
+        """RESPAWN POINT MECHANIC: Move sprite to respawn point.
+
+        Move sprite to respawn point if one was previously stored.
+        This may move the sprite to a different map.
+
+        If no respawn point was previously stored in the sprite then
+        do nothing and log a warning.
+        """
+
+        if "respawn" in sprite:
+            destMap = self
+            if sprite['respawn']['mapName'] != self['name']:
+                destMap = engine.server.SERVER['maps'][sprite['respawn']['mapName']]
+                self.setObjectMap(sprite, destMap)
+            destMap.setObjectLocationByAnchor(sprite, sprite['respawn']['x'], sprite['respawn']['y'])
+            destMap.delMoveLinear(sprite)
+        else:
+            # else this sprite never went through a respawn point. Perhaps it is something the player carried into over
+            # the respawn area. Let's hope it's OK to leave it where it is.
+            log("Tried to respawn a sprite that does not have a respawn point.", "WARNING")
+
+    def triggerSaveRespawnPoint(self, trigger, sprite):
+        """RESPAWN POINT MECHANIC: trigger method.
+
+        Save the sprite's current location as the its respawn point.
+        """
+        self.setRespawnPoint(sprite)
+
+    def setRespawnPoint(self, sprite):
+        """RESPAWN POINT MECHANIC: set the sprites respawn point to it's current location.
+
+        Remember sprites location so the sprite can be put back to this
+        location later.
+
+        Adds attributes to sprite: respawn
+        """
+        sprite['respawn'] = {'mapName': sprite['mapName'], 'x': sprite['anchorX'], 'y': sprite['anchorY']}
+
+    def delRespawnPoint(self, sprite):
+        """RESPAWN POINT MECHANIC: remove the sprites respawn point.
+
+        Removes attributes from sprite: respawn
+        """
+        if "respawn" in sprite:
+            del sprite['respawn']

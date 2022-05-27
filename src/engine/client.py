@@ -116,7 +116,8 @@ class Client(dict):
         # actionText defaults that differ from DEFAULTTEXT
         self['ACTIONTEXT'] = {
             "halign": "center",
-            "valign": "bottom"
+            "valign": "bottom",
+            
             }
 
         # marqueeText defaults that differ from DEFAULTTEXT
@@ -129,6 +130,7 @@ class Client(dict):
             "halign": "center",
             "valign": "bottom"
             }
+        
 
         self['testMode'] = False  # True if server is in testMode. Server provides this in joinReply message.
 
@@ -464,7 +466,8 @@ class Client(dict):
             'y': 0,
             'width': self['screen'].get_width(),
             'height': self['screen'].get_height(),
-            'text': text
+            'text': text,
+            
             }
 
         # find the map that the server wants us to render.

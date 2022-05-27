@@ -14,7 +14,7 @@ class Client(engine.client.Client):
         """Extends ___init__ and updates text defaults."""
 
         super().__init__(args)
-
+        
         self['MARQUEETEXT'].update({
             'pixelsize': 36,
             "fontfamily": "Old London",

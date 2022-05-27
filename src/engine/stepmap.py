@@ -228,12 +228,14 @@ class StepMap(engine.map.Map):
 
             # CUSTOM CODE: displays hp every time stepmap is called
 
-            self.current_health = str(sprite['health'])
-            self.maximum_health = 100
-            self.health_bar_length = 400
-            self.health_ratio = self.maximum_health / self.health_bar_length
+            # self.current_health = str(sprite['health'])
+            # self.maximum_health = 100
+            # self.health_bar_length = 400
+            # self.health_ratio = self.maximum_health / self.health_bar_length
 
-            pygame.draw.rect(self['screen'], (255,0,0), (10,10,self.current_health/self.health_ratio,25))
+            # image = pygame.Surface((width, height), pygame.SRCALPHA, 32)
+
+            # pygame.draw.rect(self['screen'], (255,0,0), (10,10,self.current_health/self.health_ratio,25))
             
             text = str(sprite['labelText']) + "\n"
             text += str(sprite['health']) + "\n"
@@ -249,7 +251,7 @@ class StepMap(engine.map.Map):
                 if sprite['life'] == 1:
                     sprite['life'] = 0
                     sprite['respawn'] = time.perf_counter()
-                    self.setSpriteMarqueeText(sprite, f"ur ded lol")
+                    self.setSpriteMarqueeText(sprite, f"You Have Died")
                 elif sprite['life'] == 0:
                     if time.perf_counter() - respawn > 5:
                         self.delSpriteMarqueeText(sprite)
