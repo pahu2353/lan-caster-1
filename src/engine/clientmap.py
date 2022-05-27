@@ -38,10 +38,10 @@ class ClientMap(engine.map.Map):
         # default values for optional keys in a textObject['text'] dict.
         self['DEFAULTTEXT'] = {
             "bold": False,
-            "color": "#00ff00",
-            "fontfamily": None,
+            "color": "#ffffff",
+            "fontfamily": "Old London",
             "halign": "left",
-            "pixelsize": 16,
+            "pixelsize": 20,
             "underline": False,
             "valign": "top",
             "wrap": True,
@@ -51,6 +51,8 @@ class ClientMap(engine.map.Map):
             "bgroundCorners": 0,
             "antialiased": True
             }
+        
+        
 
         # speechText defaults that differ from DEFAULTTEXT
         self['SPEACHTEXT'] = {
