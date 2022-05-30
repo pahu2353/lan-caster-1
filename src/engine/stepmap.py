@@ -237,7 +237,7 @@ class StepMap(engine.map.Map):
 
             # pygame.draw.rect(self['screen'], (255,0,0), (10,10,self.current_health/self.health_ratio,25))
             
-            text = str(sprite['labelText']) + "\n"
+            text = str(sprite['name']) + "\n"
             text += str(sprite['health']) + "\n"
             text += "Kills: " + str(sprite['kills']) + " - Deaths: " + str(sprite['deaths']) + "\n"
             text += "Attack ([space])"
