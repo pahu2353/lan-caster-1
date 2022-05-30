@@ -272,11 +272,11 @@ class ServerMap(engine.stepmap.StepMap):
         reset = sprite['cooldown']
 
         if "attacked" not in sprite:
-            if "action" in sprite:
+            if "action" in sprite:  
                 if time.perf_counter() - reset > 0.5:
                     
-                    if attackableTrigger['attackableSprite']['health'] > 0:
-                        attackableTrigger['attackableSprite']['health'] -= 20
+                    if attackableTrigger['attackableSprite']['health'] > 0 and sprite['health'] > 0:
+                        attackableTrigger['attackableSprite']['health'] -= 100
                         if attackableTrigger['attackableSprite']['health'] <= 0:
                             attackableTrigger['attackableSprite']['health'] = 0
                             attackableTrigger['attackableSprite']['deaths'] += 1

@@ -122,7 +122,7 @@
                  "kills": 0,
                  "deaths": 0,
                  "cooldown": 0,
-                 "respawn": 0,
+                 "respawnTime": 0,
                  "life": 1
                 }, 
                 {
@@ -140,7 +140,7 @@
                  "deaths": 0,
                  "health": 100,
                  "cooldown": 0,
-                 "respawn": 0,
+                 "respawnTime": 0,
                  "life": 1
                 }],
          "opacity":1,

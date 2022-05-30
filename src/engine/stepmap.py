@@ -245,18 +245,24 @@ class StepMap(engine.map.Map):
             self.setSpriteSpeechText(sprite, str(sprite['health']))
             self.setSpriteHUDText(sprite, text)
 
-            respawn = sprite['respawn']
+            respawnTime = sprite['respawnTime']
 
             if sprite['health'] <= 0:
+                self.delMoveLinear(sprite)
                 if sprite['life'] == 1:
                     sprite['life'] = 0
-                    sprite['respawn'] = time.perf_counter()
-                    self.setSpriteMarqueeText(sprite, f"You Have Died")
+                    sprite['respawnTime'] = time.perf_counter()
+                    self.setSpriteMarqueeText(sprite, f"You Have Died; Respawning in 5 seconds")
                 elif sprite['life'] == 0:
-                    if time.perf_counter() - respawn > 5:
+                    if time.perf_counter() - respawnTime > 5:
                         self.delSpriteMarqueeText(sprite)
                         sprite['health'] = 100
                         sprite['life'] = 1
+                        self.setSpriteLocationByRespawnPoint(sprite)
+                    
+                    # make player not move when dead
+                    # add health bar
+                    # add countdown timer to playerdeath
 
 
                     
