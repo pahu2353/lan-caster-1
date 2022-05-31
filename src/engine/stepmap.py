@@ -242,7 +242,13 @@ class StepMap(engine.map.Map):
             text += "Kills: " + str(sprite['kills']) + " - Deaths: " + str(sprite['deaths']) + "\n"
             text += "Attack ([space])"
              
-            self.setSpriteSpeechText(sprite, str(sprite['health']))
+            # CUSTOM CODE: displays hp every time stepmap is called
+            if (sprite['type'] == "player"):
+                if "health" in sprite:
+                    self.setSpriteSpeechText(sprite, str(sprite['health']))
+                else:
+                    sprite['health'] = 100
+            
             self.setSpriteHUDText(sprite, text)
 
             respawnTime = sprite['respawnTime']
