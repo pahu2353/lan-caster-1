@@ -236,33 +236,39 @@ class StepMap(engine.map.Map):
             # image = pygame.Surface((width, height), pygame.SRCALPHA, 32)
 
             # pygame.draw.rect(self['screen'], (255,0,0), (10,10,self.current_health/self.health_ratio,25))
-            
-            text = str(sprite['name']) + "\n"
-            text += str(sprite['health']) + "\n"
-            text += "Kills: " + str(sprite['kills']) + " - Deaths: " + str(sprite['deaths']) + "\n"
-            text += "Attack ([space])"
-             
-            self.setSpriteSpeechText(sprite, str(sprite['health']))
-            self.setSpriteHUDText(sprite, text)
+        
+            if sprite['type'] == "structure":
+                self.setSpriteSpeechText(sprite, str(sprite['health'])
 
-            respawnTime = sprite['respawnTime']
+            if sprite['type'] == "player":
+                sprite['name'] = sprite['labelText']
 
-            if sprite['health'] <= 0:
-                self.delMoveLinear(sprite)
-                if sprite['life'] == 1:
-                    sprite['life'] = 0
-                    sprite['respawnTime'] = time.perf_counter()
-                    self.setSpriteMarqueeText(sprite, f"You Have Died; Respawning in 5 seconds")
-                elif sprite['life'] == 0:
-                    if time.perf_counter() - respawnTime > 5:
-                        self.delSpriteMarqueeText(sprite)
-                        sprite['health'] = 100
-                        sprite['life'] = 1
-                        self.setSpriteLocationByRespawnPoint(sprite)
-                    
-                    # make player not move when dead
-                    # add health bar
-                    # add countdown timer to playerdeath
+                text = str(sprite['name']) + "\n"
+                text += str(sprite['health']) + "\n"
+                text += "Kills: " + str(sprite['kills']) + " - Deaths: " + str(sprite['deaths']) + "\n"
+                text += "Attack ([space])"
+
+                self.setSpriteSpeechText(sprite, str(sprite['health']))
+                self.setSpriteHUDText(sprite, text)
+
+                respawnTime = sprite['respawnTime']
+
+                if sprite['health'] <= 0:
+                    self.delMoveLinear(sprite)
+                    if sprite['life'] == 1:
+                        sprite['life'] = 0
+                        sprite['respawnTime'] = time.perf_counter()
+                        self.setSpriteMarqueeText(sprite, f"You Have Died; Respawning in 5 seconds")
+                    elif sprite['life'] == 0:
+                        if time.perf_counter() - respawnTime > 5:
+                            self.delSpriteMarqueeText(sprite)
+                            sprite['health'] = 100
+                            sprite['life'] = 1
+                            self.setSpriteLocationByRespawnPoint(sprite)
+                        
+                        # make player not move when dead
+                        # add health bar
+                        # add countdown timer to playerdeath
 
 
                     

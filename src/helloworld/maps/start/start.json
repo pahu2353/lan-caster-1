@@ -126,6 +126,24 @@
                  "life": 1
                 }, 
                 {
+                     "gid":229,
+                     "height":32,
+                     "id":10,
+                     "name":"",
+                     "rotation":0,
+                     "type":"structure",
+                     "visible":true,
+                     "width":32,
+                     "x":233.836981835119,
+                     "y":347.439217512809,
+                     "health": 100,
+                     "kills": 0,
+                     "deaths": 0,
+                     "cooldown": 0,
+                     "respawnTime": 0,
+                     "life": 1
+                    }, 
+                {
                  "gid":229,
                  "height":32,
                  "id":9,

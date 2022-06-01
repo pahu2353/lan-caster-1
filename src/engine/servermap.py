@@ -7,6 +7,7 @@ import engine.geometry as geo
 import engine.time as time
 import engine.stepmap
 import engine.server
+import random
 
 class ServerMap(engine.stepmap.StepMap):
     """The ServerMap implements several basic game mechanics.
@@ -255,6 +256,9 @@ class ServerMap(engine.stepmap.StepMap):
         print(time.perf_counter())
         for attackable in self.findObject(type="player", returnAll=True):
             self.addAttackableTrigger(attackable)
+        
+        for attackable in self.findObject(type="structure", returnAll=True):
+            self.addAttackableTrigger(attackable)
 
         # idk what these lines of code do so i've commented them out lmao - patrick
         # self.addStepMethodPriority("trigger", "triggerHoldable", 10)
@@ -276,6 +280,8 @@ class ServerMap(engine.stepmap.StepMap):
                 if time.perf_counter() - reset > 0.5:
                     
                     if attackableTrigger['attackableSprite']['health'] > 0 and sprite['health'] > 0:
+
+                        # damage adjustments
                         attackableTrigger['attackableSprite']['health'] -= 100
                         if attackableTrigger['attackableSprite']['health'] <= 0:
                             attackableTrigger['attackableSprite']['health'] = 0
@@ -290,6 +296,10 @@ class ServerMap(engine.stepmap.StepMap):
                     
             else:
                 self.setSpriteActionText(sprite, f"")
+        
+        if sprite['type'] == "structure":
+            if sprite['health'] < 0
+                
 
 
     def pickupAttackable(self, attackableTrigger, sprite):
@@ -680,3 +690,50 @@ class ServerMap(engine.stepmap.StepMap):
         """
         if "respawn" in sprite:
             del sprite['respawn']
+
+    ########################################################
+    # CHICKEN MECHANIC
+    ########################################################
+
+    def initChichen(self):
+        """CHICKEN MECHANIC: init method."""
+        self['CHICKENSPEED'] = 10
+
+    def stepMapStartChicken(self):
+        """CHICKEN MECHANIC: stepMapStart method.
+
+        Have the chicken move towards the closest player, but
+        stop before getting to close. Note, if a chicken is
+        being thrown then we need to wait until it lands
+        before starting it moving again.
+
+        Also make chicken say random things at random times.
+        """
+        for sprite in self['sprites']:
+            if sprite['name'] == "chicken":
+                # if this chicken is not being thrown right now then have it walk to closest player.
+                # we know something is being thrown because it's moveSpeed will be self['THROWSPEED']
+                if ("move" not in sprite or (
+                        "move" in sprite and sprite['move']['s'] != self['THROWSPEED'])):
+                    player = False
+                    playerDistance = 0
+                    # find the closet player.
+                    for p in self.findObject(type="player", returnAll=True):
+                        pDis = geo.distance(sprite['anchorX'], sprite['anchorY'], p['anchorX'], p['anchorY'])
+                        if pDis < playerDistance or player == False:
+                            player = p
+                            playerDistance = pDis
+                    if player and playerDistance > 50:
+                        self.setMoveLinear(sprite, player['anchorX'], player['anchorY'], self['CHICKENSPEED'])
+                    else:
+                        self.delMoveLinear(sprite)
+
+                if random.randint(0, 5000) == 0:
+                    # chicken sounds from https://www.chickensandmore.com/chicken-sounds/
+                    text = random.choice((
+                        "cluck cluck",
+                        "Life is good, I'm having a good time.",
+                        "Take cover I think I see a hawk!",
+                        "buk, buk, buk, ba-gawk"
+                        ))
+                    self.setSpriteSpeechText(sprite, text, time.perf_counter() + 2)
