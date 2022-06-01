@@ -1,0 +1,14 @@
+{ "columns":1,
+ "image":"..\/images\/tower2.png",
+ "imageheight":800,
+ "imagewidth":800,
+ "margin":0,
+ "name":"tower2",
+ "spacing":0,
+ "tilecount":1,
+ "tiledversion":"2021.03.23",
+ "tileheight":800,
+ "tilewidth":800,
+ "type":"tileset",
+ "version":1.5
+}

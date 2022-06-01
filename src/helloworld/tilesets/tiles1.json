@@ -1,0 +1,14 @@
+{ "columns":4,
+ "image":"..\/images\/tiles1.png",
+ "imageheight":256,
+ "imagewidth":256,
+ "margin":0,
+ "name":"tiles1",
+ "spacing":0,
+ "tilecount":16,
+ "tiledversion":"2021.03.23",
+ "tileheight":64,
+ "tilewidth":64,
+ "type":"tileset",
+ "version":1.5
+}

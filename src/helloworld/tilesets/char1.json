@@ -1,0 +1,14 @@
+{ "columns":1,
+ "image":"..\/images\/char1.png",
+ "imageheight":170,
+ "imagewidth":77,
+ "margin":0,
+ "name":"char1",
+ "spacing":0,
+ "tilecount":1,
+ "tiledversion":"2021.03.23",
+ "tileheight":170,
+ "tilewidth":77,
+ "type":"tileset",
+ "version":1.5
+}
