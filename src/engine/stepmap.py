@@ -236,13 +236,63 @@ class StepMap(engine.map.Map):
             # image = pygame.Surface((width, height), pygame.SRCALPHA, 32)
 
             # pygame.draw.rect(self['screen'], (255,0,0), (10,10,self.current_health/self.health_ratio,25))
+<<<<<<< HEAD
+            # CUSTOM CODE: displays hp every time stepmap is called
+            if (sprite['type'] == "player"):
+                if "health" in sprite:
+                    self.setSpriteSpeechText(sprite, str(sprite['health']))
+                else:
+                    sprite['health'] = 100 
+            
+            if (sprite['type'] == "structure"):
+                if "health" in sprite:
+                    self.setSpriteSpeechText(sprite, str(sprite['health']))
+                else:
+                    sprite['health'] = 1000 
+            
+            if sprite['type'] == "player":
+                sprite['name'] = sprite['labelText']
+
+                text = str(sprite['name']) + "\n"
+                text += str(sprite['health']) + "\n"
+                text += "Kills: " + str(sprite['kills']) + " - Deaths: " + str(sprite['deaths']) + "\n"
+                text += "Attack ([space])"
+
+                self.setSpriteSpeechText(sprite, str(sprite['health']))
+                self.setSpriteHUDText(sprite, text)
+
+                respawnTime = sprite['respawnTime']
+
+                if sprite['health'] <= 0:
+                    self.delMoveLinear(sprite)
+                    if sprite['life'] == 1:
+                        sprite['life'] = 0
+                        sprite['respawnTime'] = time.perf_counter()
+                        self.setSpriteMarqueeText(sprite, f"You Have Died; Respawning in 5 seconds")
+                    elif sprite['life'] == 0:
+                        if time.perf_counter() - respawnTime > 5:
+                            self.delSpriteMarqueeText(sprite)
+                            sprite['health'] = 100
+                            sprite['life'] = 1
+                            self.setSpriteLocationByRespawnPoint(sprite)
+                        
+                        # make player not move when dead
+                        # add health bar
+                        # add countdown timer to playerdeath
+=======
             
             text = str(sprite['name']) + "\n"
             text += str(sprite['health']) + "\n"
             text += "Kills: " + str(sprite['kills']) + " - Deaths: " + str(sprite['deaths']) + "\n"
             text += "Attack ([space])"
              
-            self.setSpriteSpeechText(sprite, str(sprite['health']))
+            # CUSTOM CODE: displays hp every time stepmap is called
+            if (sprite['type'] == "player"):
+                if "health" in sprite:
+                    self.setSpriteSpeechText(sprite, str(sprite['health']))
+                else:
+                    sprite['health'] = 100
+            
             self.setSpriteHUDText(sprite, text)
 
             respawnTime = sprite['respawnTime']
@@ -263,6 +313,7 @@ class StepMap(engine.map.Map):
                     # make player not move when dead
                     # add health bar
                     # add countdown timer to playerdeath
+>>>>>>> 5d8294cfe772006b711f6919e00e6aea3526f64a
 
 
                     
