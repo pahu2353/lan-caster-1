@@ -283,10 +283,18 @@ class ServerMap(engine.stepmap.StepMap):
 
                         # damage adjustments
                         attackableTrigger['attackableSprite']['health'] -= 100
-                        if attackableTrigger['attackableSprite']['health'] <= 0:
-                            attackableTrigger['attackableSprite']['health'] = 0
-                            attackableTrigger['attackableSprite']['deaths'] += 1
-                            sprite['kills'] += 1
+
+                        if attackableTrigger['attackableSprite']['type'] == "player":
+                            if attackableTrigger['attackableSprite']['health'] <= 0:
+                                attackableTrigger['attackableSprite']['health'] = 0
+                                attackableTrigger['attackableSprite']['deaths'] += 1
+                                sprite['kills'] += 1
+                                self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
+                        elif attackableTrigger['attackableSprite']['type'] == "structure":
+                            print("test")
+                            if attackableTrigger['attackableSprite']['health'] <= 0:
+                                self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
+                            
                     
 
                     print ("i just attacked " + str(attackableTrigger['attackableSprite']['name']) ) 
@@ -297,9 +305,30 @@ class ServerMap(engine.stepmap.StepMap):
             else:
                 self.setSpriteActionText(sprite, f"")
         
-        if sprite['type'] == "structure":
-            if sprite['health'] < 0
-                
+        
+    
+    def triggerStructure(self, attackableTrigger, sprite):
+   
+
+        reset = sprite['cooldown']
+
+        if "attacked" not in sprite:
+            if "action" in sprite:  
+                if time.perf_counter() - reset > 0.5:
+                    
+                    if attackableTrigger['attackableSprite']['health'] > 0 and sprite['health'] > 0:
+
+                        # damage adjustments
+                        attackableTrigger['attackableSprite']['health'] -= 100
+                        if attackableTrigger['attackableSprite']['health'] <= 0:
+                            attackableTrigger['attackableSprite']['health'] = 0
+   
+                    
+
+                    print ("i just attacked " + str(attackableTrigger['attackableSprite']['name']) ) 
+                    
+                    sprite['cooldown'] = time.perf_counter()
+                    
 
 
     def pickupAttackable(self, attackableTrigger, sprite):
