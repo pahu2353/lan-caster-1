@@ -251,7 +251,10 @@ class StepMap(engine.map.Map):
                     sprite['health'] = 1000 
             
             if sprite['type'] == "player":
-                sprite['name'] = sprite['labelText']
+                try:
+                    sprite['name'] = sprite['labelText']
+                except:
+                    print ("there has been a slight error")
 
                 text = str(sprite['name']) + "\n"
                 text += str(sprite['health']) + "\n"
