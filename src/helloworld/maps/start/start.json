@@ -29,7 +29,13 @@
                  "visible":true,
                  "width":27,
                  "x":3937,
-                 "y":80
+                 "y":80,
+                 "health": 100,
+                 "kills": 0,
+                 "deaths": 0,
+                 "cooldown": 0,
+                 "respawnTime": 0,
+                 "life": 1
                 }, 
                 {
                  "gid":19,
@@ -41,7 +47,13 @@
                  "visible":true,
                  "width":27,
                  "x":27,
-                 "y":3978
+                 "y":3978,
+                 "health": 100,
+                 "kills": 0,
+                 "deaths": 0,
+                 "cooldown": 0,
+                 "respawnTime": 0,
+                 "life": 1
                 }, 
                 {
                  "gid":18,
@@ -53,7 +65,8 @@
                  "visible":true,
                  "width":800,
                  "x":2944,
-                 "y":515
+                 "y":515,
+                 "cooldown": 0
                 }, 
                 {
                  "gid":18,
@@ -65,7 +78,8 @@
                  "visible":true,
                  "width":800,
                  "x":3170,
-                 "y":845
+                 "y":845,
+                 "cooldown": 0
                 }, 
                 {
                  "gid":18,
@@ -77,7 +91,8 @@
                  "visible":true,
                  "width":800,
                  "x":3504,
-                 "y":1005
+                 "y":1005,
+                 "cooldown": 0
                 }, 
                 {
                  "gid":18,
@@ -89,7 +104,8 @@
                  "visible":true,
                  "width":800,
                  "x":-263,
-                 "y":3670
+                 "y":3670,
+                 "cooldown": 0
                 }, 
                 {
                  "gid":18,
@@ -101,7 +117,8 @@
                  "visible":true,
                  "width":800,
                  "x":131,
-                 "y":3860
+                 "y":3860,
+                 "cooldown": 0
                 }, 
                 {
                  "gid":18,
@@ -113,7 +130,8 @@
                  "visible":true,
                  "width":800,
                  "x":359,
-                 "y":4250
+                 "y":4250,
+                 "cooldown": 0
                 }],
          "opacity":1,
          "type":"objectgroup",
