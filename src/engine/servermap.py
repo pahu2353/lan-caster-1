@@ -289,7 +289,6 @@ class ServerMap(engine.stepmap.StepMap):
                                 attackableTrigger['attackableSprite']['health'] = 0
                                 attackableTrigger['attackableSprite']['deaths'] += 1
                                 sprite['kills'] += 1
-                                self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
                         elif attackableTrigger['attackableSprite']['type'] == "structure":
                             print("test")
                             if attackableTrigger['attackableSprite']['health'] <= 0:

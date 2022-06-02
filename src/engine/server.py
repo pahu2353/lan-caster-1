@@ -730,7 +730,7 @@ class Server(dict):
         self['players'][ipport] = {
             'ip': ip,
             'port': port,
-            'moveSpeed': 120,  # default move speed in pixels per second.
+            'moveSpeed': 1200,  # default move speed in pixels per second.
             'sprite': sprite,
             'playerNumber': sprite['playerNumber'],
             'actionText': False,  # set to false if not in use, rather than removing.

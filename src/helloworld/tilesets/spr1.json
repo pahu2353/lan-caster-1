@@ -1,14 +1,14 @@
 { "columns":1,
- "image":"..\/images\/nogozone.png",
+ "image":"..\/images\/spr1.png",
  "imageheight":64,
- "imagewidth":64,
+ "imagewidth":29,
  "margin":0,
- "name":"nogozone",
+ "name":"spr1",
  "spacing":0,
  "tilecount":1,
  "tiledversion":"2021.03.23",
  "tileheight":64,
- "tilewidth":64,
+ "tilewidth":27,
  "type":"tileset",
  "version":1.5
 }
