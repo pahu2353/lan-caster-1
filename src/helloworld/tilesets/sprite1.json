@@ -1,14 +1,14 @@
 { "columns":1,
- "image":"..\/images\/spr1.png",
+ "image":"..\/images\/sprite1.png",
  "imageheight":64,
  "imagewidth":29,
  "margin":0,
- "name":"spr1",
+ "name":"sprite1",
  "spacing":0,
  "tilecount":1,
  "tiledversion":"2021.03.23",
  "tileheight":64,
- "tilewidth":27,
+ "tilewidth":29,
  "type":"tileset",
  "version":1.5
 }

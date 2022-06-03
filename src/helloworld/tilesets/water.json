@@ -1,0 +1,14 @@
+{ "columns":12,
+ "image":"..\/images\/water.png",
+ "imageheight":331,
+ "imagewidth":410,
+ "margin":0,
+ "name":"water",
+ "spacing":0,
+ "tilecount":120,
+ "tiledversion":"2021.03.23",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":1.5
+}
