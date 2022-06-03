@@ -329,6 +329,10 @@
         {
          "firstgid":19,
          "source":"..\/..\/tilesets\/spr1.json"
+        },
+        {
+         "firstgid":21,
+         "source":"..\/..\/tilesets\/bullets.json"
         }, 
         {
          "firstgid":20,

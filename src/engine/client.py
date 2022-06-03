@@ -583,7 +583,9 @@ class Client(dict):
             msgType = 'playerMove'
             # if btn3:
             #     msgType = 'testPlayerJump'
-            self['socket'].sendMessage({'type': msgType, 'moveDestX': moveDestX, 'moveDestY': moveDestY}) 
-
+            if btn3:
+                self['socket'].sendMessage({'type': msgType, 'moveDestX': moveDestX, 'moveDestY': moveDestY}) 
+            if btn1:
+                self['socket'].sendMessage({'type': 'fire', 'fireDestX': moveDestX, 'fireDestY': moveDestY})
 
         # testing comment awojfoawiejf

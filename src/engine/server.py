@@ -9,6 +9,7 @@ from engine.log import log
 import engine.log
 import engine.network
 import engine.loaders
+import engine.geometry as geo
 
 
 def quit(signal=None, frame=None):
@@ -335,6 +336,20 @@ class Server(dict):
             sprite = self['players'][ipport]['sprite']
             map = self['maps'][sprite['mapName']]
             map.setMoveLinear(sprite, msg['moveDestX'], msg['moveDestY'], self['players'][ipport]['moveSpeed'])
+
+    def msgFire(self, ip, port, ipport, msg):
+        if ipport in self['players']:
+            player = self['players'][ipport]
+            sprite = player['sprite']
+            map = self['maps'][sprite['mapName']]
+            
+            # ensure player is not firing at themselves
+            if geo.distance(sprite['anchorX'], sprite['anchorY'], msg['fireDestX'], msg['fireDestY']) < sprite['width']:
+                return
+
+            angle = geo.angle(sprite['anchorX'],sprite['anchorY'],msg['fireDestX'],msg['fireDestY'])
+
+            map.createArrow(sprite['anchorX'],sprite['anchorY'],angle,sprite['width'])
 
     def msgPlayerAction(self, ip, port, ipport, msg):
         """Process msg of type playerAction.

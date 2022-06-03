@@ -770,3 +770,44 @@ class ServerMap(engine.stepmap.StepMap):
                         "buk, buk, buk, ba-gawk"
                         ))
                     self.setSpriteSpeechText(sprite, text, time.perf_counter() + 2)
+
+    ########################################################
+    # SHOOT MECHANIC
+    ########################################################
+    def createArrow(self, x,y,angle,startDistance):
+        anchorX, anchorY = geo.project(x,y,angle,0)
+
+        saw = {
+        'anchorX': anchorX,
+        'anchorY': anchorY,
+        'collisionType': 'anchor',
+        'gid': 613,
+        'height': 32,
+        'mapName': 'start',
+        'name': '',
+        'prop-maxX': 276,
+        'prop-minX': 80,
+        'prop-speed': 100,
+        'tilesetName': 'bullets',
+        'tilesetTileNumber': 0,
+        'type': 'hehe',
+        'width': 32,
+        'x': 0,
+        'y': 0,
+        'cooldown' : 0
+        }
+
+        self.addObject(saw, objectList=self['sprites'])
+
+        sawTrigger = saw.copy()
+        sawTrigger['collisionType'] = 'rect'
+        sawTrigger['doNotTrigger'] = [saw]
+        self.addObject(sawTrigger, objectList=self['triggers'])
+        self.addFollower(saw, sawTrigger)
+
+        moveDestX, moveDestY = geo.project(anchorX,anchorY,angle,400)
+        self.setMoveLinear(saw, moveDestX, moveDestY, 1500, slide=False)
+
+    def triggerHehe(self, trigger, sprite):
+        if(sprite['type']) == 'player':
+            sprite['health'] -= 1

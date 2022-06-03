@@ -104,6 +104,10 @@ class Messages(dict):
                 },
             'udpPunchThrough': {}
             }
+        self['messageDefinitions']['fire'] = {  # player has requested to fire.
+            'fireDestX': 'int',
+            'fireDestY': 'int'
+            }
 
     def __str__(self):
         return engine.log.objectToStr(self)
