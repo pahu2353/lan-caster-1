@@ -1,5 +1,6 @@
 """ServerMap implements game mechanics."""
 
+from operator import truediv
 from engine.log import log
 from time import perf_counter
 import engine.map
@@ -289,11 +290,7 @@ class ServerMap(engine.stepmap.StepMap):
                                 attackableTrigger['attackableSprite']['health'] = 0
                                 attackableTrigger['attackableSprite']['deaths'] += 1
                                 sprite['kills'] += 1
-                        elif attackableTrigger['attackableSprite']['type'] == "structure":
-                            print("test")
-                            if attackableTrigger['attackableSprite']['health'] <= 0:
-                                self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
-                            
+                        
                     
 
                     print ("i just attacked " + str(attackableTrigger['attackableSprite']['name']) ) 
@@ -307,8 +304,6 @@ class ServerMap(engine.stepmap.StepMap):
         
     
     def triggerStructure(self, attackableTrigger, sprite):
-   
-
         reset = sprite['cooldown']
 
         if "attacked" not in sprite:
@@ -321,13 +316,23 @@ class ServerMap(engine.stepmap.StepMap):
                         attackableTrigger['attackableSprite']['health'] -= 100
                         if attackableTrigger['attackableSprite']['health'] <= 0:
                             attackableTrigger['attackableSprite']['health'] = 0
+
+                        if attackableTrigger['attackableSprite']['type'] == "structure":
+                            if attackableTrigger['attackableSprite']['health'] <= 0:
+                                self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
+                                
    
                     
 
-                    print ("i just attacked " + str(attackableTrigger['attackableSprite']['name']) ) 
+                    print ("i just attacked a tower!") 
                     
                     sprite['cooldown'] = time.perf_counter()
                     
+        
+        if attackableTrigger['attackableSprite']['health'] > 0 and sprite['health'] > 0:
+            sprite['health'] -= 1
+            print(sprite['health'])
+            
 
 
     def pickupAttackable(self, attackableTrigger, sprite):
@@ -765,3 +770,44 @@ class ServerMap(engine.stepmap.StepMap):
                         "buk, buk, buk, ba-gawk"
                         ))
                     self.setSpriteSpeechText(sprite, text, time.perf_counter() + 2)
+
+    ########################################################
+    # SHOOT MECHANIC
+    ########################################################
+    def createArrow(self, x,y,angle,startDistance):
+        anchorX, anchorY = geo.project(x,y,angle,0)
+
+        saw = {
+        'anchorX': anchorX,
+        'anchorY': anchorY,
+        'collisionType': 'anchor',
+        'gid': 613,
+        'height': 32,
+        'mapName': 'start',
+        'name': '',
+        'prop-maxX': 276,
+        'prop-minX': 80,
+        'prop-speed': 100,
+        'tilesetName': 'bullets',
+        'tilesetTileNumber': 0,
+        'type': 'hehe',
+        'width': 32,
+        'x': 0,
+        'y': 0,
+        'cooldown' : 0
+        }
+
+        self.addObject(saw, objectList=self['sprites'])
+
+        sawTrigger = saw.copy()
+        sawTrigger['collisionType'] = 'rect'
+        sawTrigger['doNotTrigger'] = [saw]
+        self.addObject(sawTrigger, objectList=self['triggers'])
+        self.addFollower(saw, sawTrigger)
+
+        moveDestX, moveDestY = geo.project(anchorX,anchorY,angle,400)
+        self.setMoveLinear(saw, moveDestX, moveDestY, 1500, slide=False)
+
+    def triggerHehe(self, trigger, sprite):
+        if(sprite['type']) == 'player':
+            sprite['health'] -= 1
