@@ -12,6 +12,7 @@ from engine.log import log
 import engine.network
 import engine.loaders
 
+pygame.init()
 
 def quit(signal=None, frame=None):
     """Quit the client process.
@@ -456,6 +457,52 @@ class Client(dict):
 
         if(self['testMode']):
             self.blitTestText()
+
+        self.renderHP()
+
+        w = self['screen'].get_width()
+        h = self['screen'].get_height()
+
+        map = self['maps'][self['step']['mapName']] 
+        green = (0,255,0,255)
+        red = (255,0,0,255)
+
+        r2 = pygame.Rect(10, 30, 250, 16)
+        r2.center = (int(w / 2), int(h - 8))
+        pygame.draw.rect(self['screen'], red, r2)
+
+        for sprite in self['step']['sprites']:
+            if sprite['type'] == 'player':
+                barWidth = int((sprite['health'] / 100) * 250)
+                r1 = pygame.Rect(10, 30, barWidth, 16)
+                r1.left = int((w / 2) - (250 / 2))
+                r1.bottom = int(h)
+                pygame.draw.rect(self['screen'], green, r1)
+
+
+    asdf = 0
+    def renderHP(self):
+        if self.asdf == 0:
+            self.asdf += 1
+            log(self['windowWidth'])
+
+        for sprite in self['step']['sprites']:
+            if sprite['type'] == 'player':
+
+                """ Render actionText to screen. """
+                text = self['ACTIONTEXT'].copy()
+                text['text'] = str('Health')
+                textObject = {
+                    'x': 0,
+                    'y': 0,
+                    'width': self['screen'].get_width(),
+                    'height': self['screen'].get_height(),
+                    'text': text
+                    }
+
+                # find the map that the server wants us to render.
+                map = self['maps'][self['step']['mapName']]
+                map.blitTextObject(self['screen'], (0, -20), textObject, mapRelative=False)
 
     def blitActionText(self, actionText):
         """ Render actionText to screen. """

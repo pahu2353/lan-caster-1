@@ -107,8 +107,13 @@ class ServerMap(engine.stepmap.StepMap):
 
                 # if we are out of bounds then slow down and try again. Mabye not going as far will be in bounds.
                 inBounds = self.checkLocation(sprite, newAnchorX, newAnchorY)
+
+                if not inBounds and sprite['type'] == "hehe":
+                    self.removeObjectFromAllLayers(sprite)
+
                 if not inBounds:
                     stepSpeed -= startStepSpeed * 0.9
+                
 
             # if we cannot move directly then try sliding (if enabled).
             if not inBounds and slide:
@@ -157,9 +162,10 @@ class ServerMap(engine.stepmap.StepMap):
 
                 # move sprite to new location
                 self.setObjectLocationByAnchor(sprite, newAnchorX, newAnchorY)
-                if sprite['type'] == "hehe":
-                    print("cheeze")
+
+                if "move" not in sprite and sprite['type'] == "hehe":
                     self.removeObjectFromAllLayers(sprite)
+
             else:
                 # sprite cannot move.
                 self.delMoveLinear(sprite)
@@ -333,14 +339,28 @@ class ServerMap(engine.stepmap.StepMap):
         
                          
         if attackableTrigger['attackableSprite']['health'] > 0 and sprite['health'] > 0:
-            sprite['health'] -= 1
+            reset2 = attackableTrigger['attackableSprite']['cooldown']
 
+            # turret cooldown
+            if time.perf_counter() - reset2 > 0.5:
+
+                # turret damage
+                sprite['health'] -= 1
+                attackableTrigger['attackableSprite']['cooldown'] = time.perf_counter()
+
+            # damage done to turret via bullet
             if sprite['type'] == "hehe":
-                attackableTrigger['attackableSprite']['health'] -= 1
-            
+
+                # prevents bullets from getting stuck and doing 240 million damage (MAY NOT BE NECESSARY ANYMORE, DO SOME TESTING)
+                reset3 = sprite['cooldown']
+
+                if time.perf_counter() - reset3 > 0.5:
+
+                    attackableTrigger['attackableSprite']['health'] -= 1
+                    sprite['cooldown'] = time.perf_counter()
             
     def triggerHehe(self, attackableTrigger, sprite):
-        if sprite['health'] > 0 and attackableTrigger['attackableSprite']['health'] > 0:
+        if sprite['health'] > 0 and attackableTrigger['attackableSprite']['health'] > 0 and sprite['team'] != attackableTrigger['attackableSprite']['team']:
             sprite['health'] -= 1
         self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
         attackableTrigger['attackableSprite']['health'] = -1
@@ -785,7 +805,7 @@ class ServerMap(engine.stepmap.StepMap):
     ########################################################
     # SHOOT MECHANIC
     ########################################################
-    def createArrow(self, x,y,angle,startDistance):
+    def createArrowTop(self, x,y,angle,startDistance):
         anchorX, anchorY = geo.project(x,y,angle,0)
 
         saw = {
@@ -806,7 +826,46 @@ class ServerMap(engine.stepmap.StepMap):
         'x': 0,
         'y': 0,
         'cooldown' : 0,
-        'health' : 1
+        'health' : 1,
+        'team' : 'top'
+        }
+
+        self.addObject(saw, objectList=self['sprites'])
+
+        #sawTrigger = saw.copy()
+        #sawTrigger['collisionType'] = 'rect'
+        #sawTrigger['doNotTrigger'] = [saw]
+        # self.addObject(sawTrigger, objectList=self['triggers'])
+        #self.addFollower(saw, sawTrigger)
+
+        moveDestX, moveDestY = geo.project(anchorX,anchorY,angle,400)
+        self.setMoveLinear(saw, moveDestX, moveDestY, 1500, slide=False)
+        self.initAttackable()
+        saw['cooldown'] = time.perf_counter()
+
+    def createArrowBottom(self, x,y,angle,startDistance):
+        anchorX, anchorY = geo.project(x,y,angle,0)
+
+        saw = {
+        'anchorX': anchorX,
+        'anchorY': anchorY,
+        'collisionType': 'anchor',
+        'gid': 613,
+        'height': 32,
+        'mapName': 'start',
+        'name': '',
+        'prop-maxX': 276,
+        'prop-minX': 80,
+        'prop-speed': 100,
+        'tilesetName': 'bullets',
+        'tilesetTileNumber': 0,
+        'type': 'hehe',
+        'width': 32,
+        'x': 0,
+        'y': 0,
+        'cooldown' : 0,
+        'health' : 1,
+        'team' : 'bottom'
         }
 
         self.addObject(saw, objectList=self['sprites'])

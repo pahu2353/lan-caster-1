@@ -349,7 +349,10 @@ class Server(dict):
 
             angle = geo.angle(sprite['anchorX'],sprite['anchorY'],msg['fireDestX'],msg['fireDestY'])
 
-            map.createArrow(sprite['anchorX'],sprite['anchorY'],angle,sprite['width'])
+            if sprite['team'] == 'top':
+                map.createArrowTop(sprite['anchorX'],sprite['anchorY'],angle,sprite['width'])
+            if sprite['team'] == 'bottom':
+                map.createArrowBottom(sprite['anchorX'],sprite['anchorY'],angle,sprite['width'])
 
     def msgPlayerAction(self, ip, port, ipport, msg):
         """Process msg of type playerAction.

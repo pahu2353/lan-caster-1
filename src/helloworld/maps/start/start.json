@@ -159,7 +159,8 @@
                  "deaths": 0,
                  "cooldown": 0,
                  "respawnTime": 0,
-                 "life": 1
+                 "life": 1,
+                 "team": "top"
                 }, 
                 {
                  "gid":19,
@@ -177,7 +178,8 @@
                  "deaths": 0,
                  "cooldown": 0,
                  "respawnTime": 0,
-                 "life": 1
+                 "life": 1,
+                 "team": "bottom"
                 }, 
                 {
                  "gid":20,
@@ -190,7 +192,8 @@
                  "width":128,
                  "x":2944,
                  "y":515,
-                 "cooldown": 0
+                 "cooldown": 0,
+                 "team" : "top"
                 }, 
                 {
                  "gid":20,
@@ -203,7 +206,8 @@
                  "width":128,
                  "x":3170,
                  "y":845,
-                 "cooldown": 0
+                 "cooldown": 0,
+                 "team" : "top"
                 }, 
                 {
                  "gid":20,
@@ -216,7 +220,8 @@
                  "width":128,
                  "x":3504,
                  "y":1005,
-                 "cooldown": 0
+                 "cooldown": 0,
+                 "team" : "top"
                 }, 
                 {
                  "gid":20,
@@ -229,7 +234,8 @@
                  "width":128,
                  "x":486.666666666667,
                  "y":3508,
-                 "cooldown": 0
+                 "cooldown": 0,
+                 "team" : "bottom"
                 }, 
                 {
                  "gid":20,
@@ -242,7 +248,8 @@
                  "width":128,
                  "x":34.6666666666666,
                  "y":3246.66666666667,
-                 "cooldown": 0
+                 "cooldown": 0,
+                 "team" : "bottom"
                 }, 
                 {
                  "gid":20,
@@ -255,7 +262,8 @@
                  "width":128,
                  "x":700,
                  "y":3941.33333333333,
-                 "cooldown": 0
+                 "cooldown": 0,
+                 "team" : "bottom"
                 }],
          "opacity":1,
          "type":"objectgroup",
