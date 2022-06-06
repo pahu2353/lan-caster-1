@@ -227,8 +227,7 @@
                  "deaths": 0,
                  "cooldown": 0,
                  "respawnTime": 0,
-                 "life": 1,
-                 "team": "bottom"
+                 "life": 1
                 }, 
                 {
                  "gid":631,
@@ -246,8 +245,7 @@
                  "deaths": 0,
                  "cooldown": 0,
                  "respawnTime": 0,
-                 "life": 1,
-                 "team": "top"
+                 "life": 1
                 }],
          "opacity":1,
          "type":"objectgroup",
