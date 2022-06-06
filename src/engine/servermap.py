@@ -157,6 +157,9 @@ class ServerMap(engine.stepmap.StepMap):
 
                 # move sprite to new location
                 self.setObjectLocationByAnchor(sprite, newAnchorX, newAnchorY)
+                if sprite['type'] == "hehe":
+                    print("cheeze")
+                    self.removeObjectFromAllLayers(sprite)
             else:
                 # sprite cannot move.
                 self.delMoveLinear(sprite)
@@ -254,11 +257,13 @@ class ServerMap(engine.stepmap.StepMap):
         attackable traits are automatically assigned to all players. 
         """
 
-        print(time.perf_counter())
         for attackable in self.findObject(type="player", returnAll=True):
             self.addAttackableTrigger(attackable)
         
         for attackable in self.findObject(type="structure", returnAll=True):
+            self.addAttackableTrigger(attackable)
+
+        for attackable in self.findObject(type="hehe", returnAll=True):
             self.addAttackableTrigger(attackable)
 
         # idk what these lines of code do so i've commented them out lmao - patrick
@@ -296,13 +301,11 @@ class ServerMap(engine.stepmap.StepMap):
                     print ("i just attacked " + str(attackableTrigger['attackableSprite']['name']) ) 
                     
                     sprite['cooldown'] = time.perf_counter()
-                    
+        
                     
             else:
                 self.setSpriteActionText(sprite, f"")
-        
-        
-    
+
     def triggerStructure(self, attackableTrigger, sprite):
         reset = sprite['cooldown']
 
@@ -327,12 +330,20 @@ class ServerMap(engine.stepmap.StepMap):
                     print ("i just attacked a tower!") 
                     
                     sprite['cooldown'] = time.perf_counter()
-                    
         
+                         
         if attackableTrigger['attackableSprite']['health'] > 0 and sprite['health'] > 0:
             sprite['health'] -= 1
-            print(sprite['health'])
+
+            if sprite['type'] == "hehe":
+                attackableTrigger['attackableSprite']['health'] -= 1
             
+            
+    def triggerHehe(self, attackableTrigger, sprite):
+        if sprite['health'] > 0 and attackableTrigger['attackableSprite']['health'] > 0:
+            sprite['health'] -= 1
+        self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
+        attackableTrigger['attackableSprite']['health'] = -1
 
 
     def pickupAttackable(self, attackableTrigger, sprite):
@@ -794,20 +805,20 @@ class ServerMap(engine.stepmap.StepMap):
         'width': 32,
         'x': 0,
         'y': 0,
-        'cooldown' : 0
+        'cooldown' : 0,
+        'health' : 1
         }
 
         self.addObject(saw, objectList=self['sprites'])
 
-        sawTrigger = saw.copy()
-        sawTrigger['collisionType'] = 'rect'
-        sawTrigger['doNotTrigger'] = [saw]
-        self.addObject(sawTrigger, objectList=self['triggers'])
-        self.addFollower(saw, sawTrigger)
+        #sawTrigger = saw.copy()
+        #sawTrigger['collisionType'] = 'rect'
+        #sawTrigger['doNotTrigger'] = [saw]
+        # self.addObject(sawTrigger, objectList=self['triggers'])
+        #self.addFollower(saw, sawTrigger)
 
         moveDestX, moveDestY = geo.project(anchorX,anchorY,angle,400)
         self.setMoveLinear(saw, moveDestX, moveDestY, 1500, slide=False)
-
-    def triggerHehe(self, trigger, sprite):
-        if(sprite['type']) == 'player':
-            sprite['health'] -= 1
+        self.initAttackable()
+        saw['cooldown'] = time.perf_counter()
+        
