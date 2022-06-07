@@ -1,0 +1,14 @@
+{ "columns":1,
+ "image":"..\/images\/tempsprite.png",
+ "imageheight":64,
+ "imagewidth":29,
+ "margin":0,
+ "name":"tempsprite",
+ "spacing":0,
+ "tilecount":1,
+ "tiledversion":"1.8.5",
+ "tileheight":64,
+ "tilewidth":29,
+ "type":"tileset",
+ "version":"1.8"
+}

@@ -1,0 +1,14 @@
+{ "columns":21,
+ "image":"..\/images\/forestrot.png",
+ "imageheight":629,
+ "imagewidth":679,
+ "margin":0,
+ "name":"forestrot",
+ "spacing":0,
+ "tilecount":399,
+ "tiledversion":"1.8.5",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":"1.8"
+}

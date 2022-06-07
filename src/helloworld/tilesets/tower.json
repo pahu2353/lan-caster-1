@@ -6,9 +6,9 @@
  "name":"tower",
  "spacing":0,
  "tilecount":1,
- "tiledversion":"2021.03.23",
+ "tiledversion":"1.8.5",
  "tileheight":128,
  "tilewidth":128,
  "type":"tileset",
- "version":1.5
+ "version":"1.8"
 }
