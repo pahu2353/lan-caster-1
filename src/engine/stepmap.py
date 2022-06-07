@@ -299,6 +299,8 @@ class StepMap(engine.map.Map):
         self['stepsProcessed'] += 1
         self['stepProcessingTime'] += (time.perf_counter()-startTime)
 
+        
+
     def stepTriggers(self, sprite):
         """Process all triggers for a sprite.
 

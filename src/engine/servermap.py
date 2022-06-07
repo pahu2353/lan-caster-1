@@ -338,14 +338,14 @@ class ServerMap(engine.stepmap.StepMap):
                     sprite['cooldown'] = time.perf_counter()
         
                          
-        if attackableTrigger['attackableSprite']['health'] > 0 and sprite['health'] > 0:
+        if attackableTrigger['attackableSprite']['health'] > 0 and sprite['health'] > 0 and sprite['team'] != attackableTrigger['attackableSprite']['team']:
             reset2 = attackableTrigger['attackableSprite']['cooldown']
 
             # turret cooldown
             if time.perf_counter() - reset2 > 0.5:
 
                 # turret damage
-                sprite['health'] -= 1
+                sprite['health'] -= 10
                 attackableTrigger['attackableSprite']['cooldown'] = time.perf_counter()
 
             # damage done to turret via bullet
@@ -358,10 +358,26 @@ class ServerMap(engine.stepmap.StepMap):
 
                     attackableTrigger['attackableSprite']['health'] -= 1
                     sprite['cooldown'] = time.perf_counter()
+
+        
             
     def triggerHehe(self, attackableTrigger, sprite):
+
+        # attackableTrigger is the bullet
         if sprite['health'] > 0 and attackableTrigger['attackableSprite']['health'] > 0 and sprite['team'] != attackableTrigger['attackableSprite']['team']:
-            sprite['health'] -= 1
+            sprite['health'] -= 10
+
+
+            if sprite['type'] == "player" and sprite['health'] <= 0:
+                sprite['deaths'] += 1
+                for sprite in self['sprites']:
+                    if sprite['type'] == "player" and sprite['name'] == attackableTrigger['attackableSprite']['name']:
+                        sprite["kills"] += 1
+
+            if sprite['type'] == "structure":
+                if sprite['health'] <= 0:
+                    self.removeObjectFromAllLayers(sprite)
+
         self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
         attackableTrigger['attackableSprite']['health'] = -1
 
@@ -805,7 +821,7 @@ class ServerMap(engine.stepmap.StepMap):
     ########################################################
     # SHOOT MECHANIC
     ########################################################
-    def createArrowTop(self, x,y,angle,startDistance):
+    def createArrowTop(self, x,y,angle,startDistance, name):
         anchorX, anchorY = geo.project(x,y,angle,0)
 
         saw = {
@@ -815,7 +831,7 @@ class ServerMap(engine.stepmap.StepMap):
         'gid': 613,
         'height': 32,
         'mapName': 'start',
-        'name': '',
+        'name': name,
         'prop-maxX': 276,
         'prop-minX': 80,
         'prop-speed': 100,
@@ -843,17 +859,17 @@ class ServerMap(engine.stepmap.StepMap):
         self.initAttackable()
         saw['cooldown'] = time.perf_counter()
 
-    def createArrowBottom(self, x,y,angle,startDistance):
+    def createArrowBottom(self, x,y,angle,startDistance, name):
         anchorX, anchorY = geo.project(x,y,angle,0)
 
         saw = {
         'anchorX': anchorX,
         'anchorY': anchorY,
         'collisionType': 'anchor',
-        'gid': 613,
+        'gid': 9999,
         'height': 32,
         'mapName': 'start',
-        'name': '',
+        'name': name,
         'prop-maxX': 276,
         'prop-minX': 80,
         'prop-speed': 100,
