@@ -469,24 +469,46 @@ class Client(dict):
         w = self['screen'].get_width()
         h = self['screen'].get_height()
 
-        map = self['maps'][self['step']['mapName']] 
-        green = (0,255,0,255)
-        red = (255,0,0,255)
+        green = (14, 227, 11)
+        lightgreen = (160, 252, 131)
+        red = (255,0,0)
+        black = (0,0,0)
 
-        r2 = pygame.Rect(10, 30, 250, 16)
-        r2.center = (int(w / 2), int(h - 8))
-        pygame.draw.rect(self['screen'], red, r2)
+        bottomHPRed = pygame.Rect(10, 30, 250, 16)
+        bottomHPRed.center = (int(w / 2), int(h - 8))
+        pygame.draw.rect(self['screen'], red, bottomHPRed)
+
 
         for sprite in self['step']['sprites']:
             if sprite['type'] == 'player' and sprite['playerNumber'] == self['playerNumber']:
                 barWidth = int((sprite['health'] / 100) * 250)
-                r1 = pygame.Rect(10, 30, barWidth, 16)
-                r1.left = int((w / 2) - (250 / 2))
-                r1.bottom = int(h)
-                pygame.draw.rect(self['screen'], green, r1)
+                bottomHPGreen = pygame.Rect(10, 30, barWidth, 16)
+                bottomHPGreen.left = int((w / 2) - (250 / 2))
+                bottomHPGreen.bottom = int(h)
+                pygame.draw.rect(self['screen'], green, bottomHPGreen)
 
+
+                asdfx = int((self['screen'].get_width() / 2) - (self['windowWidth'] / 2)) + 96 + sprite['x']
+                asdfy = int((self['screen'].get_height() / 2) - (self['windowHeight'] / 2)) + 74 + sprite['y']
+                barWidthExtra = int((sprite['health'] / 100) * 60)
+
+                attachedHPRed = pygame.Rect(100, 100, 60, 6)
+                attachedHPRed.center = (asdfx, asdfy)
+                pygame.draw.rect(self['screen'], black, attachedHPRed)
+
+                attachedHPGreen = pygame.Rect(100, 100, barWidthExtra, 6)
+                attachedHPGreen.center = (asdfx, asdfy)
+                attachedHPGreen.left = asdfx - 30
+                pygame.draw.rect(self['screen'], green, attachedHPGreen)
+
+                attachedHPBorder = pygame.Rect(100, 100, barWidthExtra, 6)
+                attachedHPBorder.center = (asdfx, asdfy)
+                attachedHPBorder.left = asdfx - 30
+                pygame.draw.rect(self['screen'], lightgreen, attachedHPBorder, 1, 0)
 
     def renderHP(self):
+
+
         for sprite in self['step']['sprites']:
             if sprite['type'] == 'player':
 
