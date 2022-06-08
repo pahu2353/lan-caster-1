@@ -89,7 +89,7 @@ class ClientTileset(engine.tileset.Tileset):
         # CHARACTER TILE
         # if tileObject['direction'] exists and tile tileNumber is type 'character'
         if tileObject and 'direction' in tileObject and tileNumber in self['tiles'] and 'type' in self['tiles'][
-                tileNumber] and self['tiles'][tileNumber]['type'] == 'character':
+                tileNumber] and self['tiles'][tileNumber]['type'] == 'player':
             '''
             change tileNumber based on tileObject['direction'] and character tile properties
             supported properties are: any combination of:
