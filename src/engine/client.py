@@ -565,8 +565,8 @@ class Client(dict):
         text = self['HUDTEXT'].copy()
         text['text'] = hUDText
         textObject = {
-            'x': self['screen'].get_width() / 4,
-            'y': self['screen'].get_height(),
+            'x': self['screen'].get_width(),
+            'y': (self['screen'].get_height() * -1),
             'width': self['screen'].get_width() / 2,
             'height': self['screen'].get_height() / 2,
             'text': text
