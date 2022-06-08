@@ -110,7 +110,10 @@ class ServerMap(engine.stepmap.StepMap):
 
                 if not inBounds and sprite['type'] == "hehe":
                     self.removeObjectFromAllLayers(sprite)
-
+                    map = engine.server.SERVER['maps']['start']
+                    temp = map.getFollowers(sprite)
+                    for f in temp:
+                        self.removeObjectFromAllLayers(f)
 
                 if not inBounds:
                     stepSpeed -= startStepSpeed * 0.9
@@ -166,7 +169,10 @@ class ServerMap(engine.stepmap.StepMap):
 
                 if "move" not in sprite and sprite['type'] == "hehe":
                     self.removeObjectFromAllLayers(sprite)
-                    # self.removeObjectFromAllLayers()
+                    map = engine.server.SERVER['maps']['start']
+                    temp = map.getFollowers(sprite)
+                    for f in temp:
+                        self.removeObjectFromAllLayers(f)
                 
                 
             else:
