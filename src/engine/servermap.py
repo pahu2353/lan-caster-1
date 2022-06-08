@@ -111,6 +111,7 @@ class ServerMap(engine.stepmap.StepMap):
                 if not inBounds and sprite['type'] == "hehe":
                     self.removeObjectFromAllLayers(sprite)
 
+
                 if not inBounds:
                     stepSpeed -= startStepSpeed * 0.9
                 
@@ -165,7 +166,9 @@ class ServerMap(engine.stepmap.StepMap):
 
                 if "move" not in sprite and sprite['type'] == "hehe":
                     self.removeObjectFromAllLayers(sprite)
-
+                    # self.removeObjectFromAllLayers()
+                
+                
             else:
                 # sprite cannot move.
                 self.delMoveLinear(sprite)
@@ -319,7 +322,7 @@ class ServerMap(engine.stepmap.StepMap):
             if "action" in sprite:  
                 if time.perf_counter() - reset > 0.5:
                     
-                    if attackableTrigger['attackableSprite']['health'] > 0 and sprite['health'] > 0:
+                    if attackableTrigger['attackableSprite']['health'] > 0 and sprite['health'] > 0 and sprite['team'] != attackableTrigger['attackableSprite']['team']:
 
                         # damage adjustments
                         attackableTrigger['attackableSprite']['health'] -= 100
@@ -329,6 +332,7 @@ class ServerMap(engine.stepmap.StepMap):
                         if attackableTrigger['attackableSprite']['type'] == "structure":
                             if attackableTrigger['attackableSprite']['health'] <= 0:
                                 self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
+                                self.removeObjectFromAllLayers(attackableTrigger)
                                 
    
                     
@@ -356,17 +360,14 @@ class ServerMap(engine.stepmap.StepMap):
 
                 if time.perf_counter() - reset3 > 0.5:
 
-                    attackableTrigger['attackableSprite']['health'] -= 1
+                    attackableTrigger['attackableSprite']['health'] -= 10
                     sprite['cooldown'] = time.perf_counter()
-
-        
             
     def triggerHehe(self, attackableTrigger, sprite):
 
         # attackableTrigger is the bullet
         if sprite['health'] > 0 and attackableTrigger['attackableSprite']['health'] > 0 and sprite['team'] != attackableTrigger['attackableSprite']['team']:
             sprite['health'] -= 10
-
 
             if sprite['type'] == "player" and sprite['health'] <= 0:
                 sprite['deaths'] += 1
@@ -379,6 +380,7 @@ class ServerMap(engine.stepmap.StepMap):
                     self.removeObjectFromAllLayers(sprite)
 
         self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
+        self.removeObjectFromAllLayers(attackableTrigger)
         attackableTrigger['attackableSprite']['health'] = -1
 
 

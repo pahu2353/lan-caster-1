@@ -441,6 +441,11 @@ class Client(dict):
     def updateInterface(self):
         """Render User Interface to Window.
 
+        
+        for trigger in self['maps']['start']['triggers']:
+                    if "move" not in trigger and trigger['type'] == "hehe":
+                        self.removeObjectFromAllLayers(trigger)
+
         Render any non-map items, such as player specific data or gui elements.
         These are rendered relative to the screen, not the map. (e.g. bottom
         of screen, not bottom of map)
@@ -458,36 +463,30 @@ class Client(dict):
         if(self['testMode']):
             self.blitTestText()
 
-        # render the HP on the screen
-        # -----------------------------#
-        # self.renderHP()
+    
+        self.renderHP()
 
-        # w = self['screen'].get_width()
-        # h = self['screen'].get_height()
+        w = self['screen'].get_width()
+        h = self['screen'].get_height()
 
-        # map = self['maps'][self['step']['mapName']] 
-        # green = (0,255,0,255)
-        # red = (255,0,0,255)
+        map = self['maps'][self['step']['mapName']] 
+        green = (0,255,0,255)
+        red = (255,0,0,255)
 
-        # r2 = pygame.Rect(10, 30, 250, 16)
-        # r2.center = (int(w / 2), int(h - 8))
-        # pygame.draw.rect(self['screen'], red, r2)
+        r2 = pygame.Rect(10, 30, 250, 16)
+        r2.center = (int(w / 2), int(h - 8))
+        pygame.draw.rect(self['screen'], red, r2)
 
-        # for sprite in self['step']['sprites']:
-        #     if sprite['type'] == 'player':
-        #         barWidth = int((sprite['health'] / 100) * 250)
-        #         r1 = pygame.Rect(10, 30, barWidth, 16)
-        #         r1.left = int((w / 2) - (250 / 2))
-        #         r1.bottom = int(h)
-        #         pygame.draw.rect(self['screen'], green, r1)
+        for sprite in self['step']['sprites']:
+            if sprite['type'] == 'player' and sprite['playerNumber'] == self['playerNumber']:
+                barWidth = int((sprite['health'] / 100) * 250)
+                r1 = pygame.Rect(10, 30, barWidth, 16)
+                r1.left = int((w / 2) - (250 / 2))
+                r1.bottom = int(h)
+                pygame.draw.rect(self['screen'], green, r1)
 
 
-    asdf = 0
     def renderHP(self):
-        if self.asdf == 0:
-            self.asdf += 1
-            log(self['windowWidth'])
-
         for sprite in self['step']['sprites']:
             if sprite['type'] == 'player':
 
@@ -636,5 +635,6 @@ class Client(dict):
                 self['socket'].sendMessage({'type': msgType, 'moveDestX': moveDestX, 'moveDestY': moveDestY}) 
             if btn1:
                 self['socket'].sendMessage({'type': 'fire', 'fireDestX': moveDestX, 'fireDestY': moveDestY})
-
+            if btn2:
+                log(self['maps']['start']['triggers'])
         # testing comment awojfoawiejf
