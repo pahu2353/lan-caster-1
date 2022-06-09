@@ -108,12 +108,8 @@ class ServerMap(engine.stepmap.StepMap):
                 # if we are out of bounds then slow down and try again. Mabye not going as far will be in bounds.
                 inBounds = self.checkLocation(sprite, newAnchorX, newAnchorY)
 
-                if not inBounds and sprite['type'] == "hehe":
-                    self.removeObjectFromAllLayers(sprite)
-                    map = engine.server.SERVER['maps']['start']
-                    temp = map.getFollowers(sprite)
-                    for f in temp:
-                        self.removeObjectFromAllLayers(f)
+                #if not inBounds and sprite['type'] == "hehe":
+                   # self.removeObject(sprite)
 
                 if not inBounds:
                     stepSpeed -= startStepSpeed * 0.9
@@ -167,12 +163,12 @@ class ServerMap(engine.stepmap.StepMap):
                 # move sprite to new location
                 self.setObjectLocationByAnchor(sprite, newAnchorX, newAnchorY)
 
-                if "move" not in sprite and sprite['type'] == "hehe":
-                    self.removeObjectFromAllLayers(sprite)
-                    map = engine.server.SERVER['maps']['start']
-                    temp = map.getFollowers(sprite)
-                    for f in temp:
-                        self.removeObjectFromAllLayers(f)
+                # if "move" not in sprite and sprite['type'] == "hehe":
+                #     self.removeObjectFromAllLayers(sprite)
+                #     map = engine.server.SERVER['maps']['start']
+                #     temp = map.getFollowers(sprite)
+                #     for f in temp:
+                #         self.removeObjectFromAllLayers(f)
                 
                 
             else:
@@ -337,8 +333,8 @@ class ServerMap(engine.stepmap.StepMap):
 
                         if attackableTrigger['attackableSprite']['type'] == "structure":
                             if attackableTrigger['attackableSprite']['health'] <= 0:
-                                self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
-                                self.removeObjectFromAllLayers(attackableTrigger)
+                                self.removeObject(attackableTrigger['attackableSprite'])
+                          
                                 
    
                     
@@ -383,10 +379,9 @@ class ServerMap(engine.stepmap.StepMap):
 
             if sprite['type'] == "structure":
                 if sprite['health'] <= 0:
-                    self.removeObjectFromAllLayers(sprite)
+                    self.removeObject(sprite)
 
         self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
-        self.removeObjectFromAllLayers(attackableTrigger)
         attackableTrigger['attackableSprite']['health'] = -1
 
 
@@ -759,7 +754,13 @@ class ServerMap(engine.stepmap.StepMap):
 
         Save the sprite's current location as the its respawn point.
         """
-        self.setRespawnPoint(sprite)
+        if sprite['team'] == trigger['name']:
+            self.setRespawnPoint(sprite)
+            try:
+                if sprite['health'] < 100:
+                    sprite['health'] += 1
+            except: 
+                log("")
 
     def setRespawnPoint(self, sprite):
         """RESPAWN POINT MECHANIC: set the sprites respawn point to it's current location.
@@ -905,3 +906,4 @@ class ServerMap(engine.stepmap.StepMap):
         self.initAttackable()
         saw['cooldown'] = time.perf_counter()
         
+ 

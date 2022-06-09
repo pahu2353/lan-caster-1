@@ -350,9 +350,9 @@ class Server(dict):
             angle = geo.angle(sprite['anchorX'],sprite['anchorY'],msg['fireDestX'],msg['fireDestY'])
 
             # you cannot kill your teammates (should you have any)
-            if sprite['team'] == 'top':
+            if sprite['team'] == 'top' and sprite['health'] > 0:
                 map.createArrowTop(sprite['anchorX'],sprite['anchorY'],angle,sprite['width'], sprite['name'])
-            if sprite['team'] == 'bottom':
+            if sprite['team'] == 'bottom' and sprite['health'] > 0:
                 map.createArrowBottom(sprite['anchorX'],sprite['anchorY'],angle,sprite['width'], sprite['name'])
 
     def msgPlayerAction(self, ip, port, ipport, msg):

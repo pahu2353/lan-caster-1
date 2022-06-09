@@ -212,6 +212,7 @@ class StepMap(engine.map.Map):
     ########################################################
 
     def stepMap(self):
+
         """Move the map forward one step in time"""
 
         startTime = time.perf_counter()
@@ -250,13 +251,17 @@ class StepMap(engine.map.Map):
                 else:
                     sprite['health'] = 1000 
             
+            if "move" not in sprite and sprite['type'] == "hehe":
+                self.removeObject(sprite)    
+        
             if sprite['type'] == "player":
                 try:
                     sprite['name'] = sprite['labelText']
                 except:
                     print ("there has been a slight error")
-
-                
+            
+            
+               
                 text = "Kills: " + str(sprite['kills']) + "\nDeaths: " + str(sprite['deaths'])
                 
 

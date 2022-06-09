@@ -1807,7 +1807,7 @@
                 {
                  "height":64,
                  "id":2,
-                 "name":"",
+                 "name":"bottom",
                  "rotation":0,
                  "type":"saveRespawnPoint",
                  "visible":true,
@@ -1818,7 +1818,7 @@
                 {
                  "height":64,
                  "id":4,
-                 "name":"",
+                 "name":"top",
                  "rotation":0,
                  "type":"saveRespawnPoint",
                  "visible":true,
