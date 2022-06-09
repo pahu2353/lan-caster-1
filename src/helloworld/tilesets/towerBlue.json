@@ -1,0 +1,14 @@
+{ "columns":1,
+ "image":"..\/images\/towerBlue.png",
+ "imageheight":128,
+ "imagewidth":128,
+ "margin":0,
+ "name":"towerBlue",
+ "spacing":0,
+ "tilecount":1,
+ "tiledversion":"2021.03.23",
+ "tileheight":128,
+ "tilewidth":128,
+ "type":"tileset",
+ "version":1.5
+}
