@@ -258,10 +258,9 @@ class StepMap(engine.map.Map):
                 try:
                     sprite['name'] = sprite['labelText']
                 except:
-                    print ("there has been a slight error")
-            
-            
-               
+                    log("")
+
+                
                 text = "Kills: " + str(sprite['kills']) + "\nDeaths: " + str(sprite['deaths'])
                 
 
