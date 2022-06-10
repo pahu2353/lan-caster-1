@@ -849,3 +849,15 @@ class Server(dict):
         if player['lastActionText'] != player['actionText'] or player['lastMarqueeText'] != player['marqueeText'] or player['lastHUDText'] != player['hUDText']:
             return True
         return False
+
+    def endGame(self):
+            log(self['players'])
+            log("Sending quitting msg to all clients.")
+            for ipport in self['players']:
+                self['socket'].sendMessage(
+                msg={'type': 'quitting'},
+                destinationIP=self['players'][ipport]['ip'],
+                destinationPort=self['players'][ipport]['port']
+                )
+                engine.server.quit()
+               

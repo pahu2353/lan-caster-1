@@ -254,8 +254,10 @@ class StepMap(engine.map.Map):
                 else:
                     sprite['health'] = 1000 
 
-             
-            
+            if (sprite['name'] == "nexus"):
+                if sprite['gameOver'] <  time.perf_counter():
+                    engine.server.SERVER.endGame()
+                    
          
             
             if "move" not in sprite and sprite['type'] == "hehe":

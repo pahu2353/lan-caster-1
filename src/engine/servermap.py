@@ -336,7 +336,18 @@ class ServerMap(engine.stepmap.StepMap):
                         if attackableTrigger['attackableSprite']['type'] == "structure":
                             if (attackableTrigger['attackableSprite']['name'] == "nexus"):
                                     if attackableTrigger['attackableSprite']['health'] <= 0:
-                                        engine.server.quit()
+                                        if attackableTrigger['attackableSprite']['team'] == "bottom":
+                                            winner = "top"
+                                        else: 
+                                            winner = "bottom"
+
+                                        for sprite in self['sprites']:
+                                                self.setSpriteMarqueeText(sprite,
+                                              f"Team " + winner + " has destroyed the nexus and won the game! Congratulations! The game will close in 5 seconds.")
+                                                sprite['gameOver'] = time.perf_counter() + 5     
+                                                
+                                   
+                                          
 
                             if attackableTrigger['attackableSprite']['health'] <= 0:
                             
@@ -383,6 +394,21 @@ class ServerMap(engine.stepmap.StepMap):
                         sprite["kills"] += 1
 
             if sprite['type'] == "structure":
+                if (sprite['name'] == "nexus"):
+                    if sprite['health'] <= 0:
+                        if sprite['team'] == "bottom":
+                            winner = "top"
+                        else: 
+                            winner = "bottom"
+
+                        for sprite in self['sprites']:
+                            self.setSpriteMarqueeText(sprite,
+                                f"Team " + winner + " has destroyed the nexus and won the game! Congratulations!  The game will close in 5 seconds.")
+                            sprite['gameOver'] = time.perf_counter() + 5               
+                
+                                
+                                                
+
                 if sprite['health'] <= 0:
                     self.removeObject(sprite)
 

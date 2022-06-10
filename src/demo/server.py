@@ -122,6 +122,7 @@ class Server(engine.server.Server):
         # check if it is time for server to quit
         if self['quitAfter'] < time.perf_counter():
             log("Sending quitting msg to all clients.")
+            
             for ipport in self['players']:
                 self['socket'].sendMessage(
                     msg={'type': 'quitting'},
