@@ -248,8 +248,11 @@ class StepMap(engine.map.Map):
             if (sprite['type'] == "structure"):
                 if "health" in sprite:
                     self.setSpriteSpeechText(sprite, str(sprite['health']))
+                    if sprite['health'] <= 0:
+                        self.removeObjectFromAllLayers(sprite)
                 else:
                     sprite['health'] = 1000 
+                
             
             if "move" not in sprite and sprite['type'] == "hehe":
                 self.removeObject(sprite)    
