@@ -1,0 +1,14 @@
+{ "columns":1,
+ "image":"..\/images\/nexusBlue.png",
+ "imageheight":188,
+ "imagewidth":256,
+ "margin":0,
+ "name":"nexusBlue",
+ "spacing":0,
+ "tilecount":1,
+ "tiledversion":"1.8.5",
+ "tileheight":188,
+ "tilewidth":256,
+ "type":"tileset",
+ "version":"1.8"
+}

@@ -346,9 +346,9 @@ class ServerMap(engine.stepmap.StepMap):
                          
         if attackableTrigger['attackableSprite']['health'] > 0 and sprite['health'] > 0 and sprite['team'] != attackableTrigger['attackableSprite']['team']:
             reset2 = attackableTrigger['attackableSprite']['cooldown']
-
+        
             # turret cooldown
-            if time.perf_counter() - reset2 > 0.5:
+            if time.perf_counter() - reset2 > 0.5 and attackableTrigger['attackableSprite']['name'] != "nexus":
 
                 # turret damage
                 sprite['health'] -= 10
