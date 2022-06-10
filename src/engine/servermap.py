@@ -333,7 +333,11 @@ class ServerMap(engine.stepmap.StepMap):
 
                         if attackableTrigger['attackableSprite']['type'] == "structure":
                             if attackableTrigger['attackableSprite']['health'] <= 0:
-                                self.removeObject(attackableTrigger['attackableSprite'])
+                                    sprt = self.getLeader(attackableTrigger)
+                                    for i in range(len(self['sprites'])):
+                                        if self['sprites'][i] == sprt:
+                                            self.removeObject(sprt, objectList=self['sprites'])
+                                #self.removeObject(attackableTrigger['attackableSprite'])
                           
                                 
    
@@ -381,7 +385,13 @@ class ServerMap(engine.stepmap.StepMap):
                 if sprite['health'] <= 0:
                     self.removeObject(sprite)
 
-        self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
+
+
+        sprt = self.getLeader(attackableTrigger)
+        for i in range(len(self['sprites'])):
+            if self['sprites'][i] == sprt:
+                self.removeObject(sprt, objectList=self['sprites'])
+        #self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
         attackableTrigger['attackableSprite']['health'] = -1
 
 

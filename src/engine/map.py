@@ -861,3 +861,12 @@ class Map(dict):
         self['layerVisabilityMask'] = layerVisabilityMask
         self.setMapChanged()
         return True
+
+    def getLeader(self, followObject):
+        #log(self['follow'])
+        for i in range(len(self['follow'])):
+            if self['follow'][i]['followers'][0][0] == followObject:
+                #log(self['follow'][i]['leader'])
+                return self['follow'][i]['leader']
+
+        return('ERR')
