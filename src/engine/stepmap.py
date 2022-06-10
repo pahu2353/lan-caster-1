@@ -212,7 +212,6 @@ class StepMap(engine.map.Map):
     ########################################################
 
     def stepMap(self):
-
         """Move the map forward one step in time"""
 
         startTime = time.perf_counter()
@@ -246,13 +245,18 @@ class StepMap(engine.map.Map):
                     sprite['health'] = 100 
             
             if (sprite['type'] == "structure"):
+            
                 if "health" in sprite:
                     self.setSpriteSpeechText(sprite, str(sprite['health']))
                     if sprite['health'] <= 0:
                         self.removeObjectFromAllLayers(sprite)
+                        
                 else:
                     sprite['health'] = 1000 
-                
+
+             
+            
+         
             
             if "move" not in sprite and sprite['type'] == "hehe":
                 self.removeObject(sprite)    
@@ -277,9 +281,9 @@ class StepMap(engine.map.Map):
                     if sprite['life'] == 1:
                         sprite['life'] = 0
                         sprite['respawnTime'] = time.perf_counter()
-                        self.setSpriteMarqueeText(sprite, f"You Have Died; Respawning in 5 seconds")
+                        self.setSpriteMarqueeText(sprite, f"You Have Died; Respawning in " + str(sprite['deaths'] + 5) + " seconds")
                     elif sprite['life'] == 0:
-                        if time.perf_counter() - respawnTime > 5:
+                        if time.perf_counter() - respawnTime > (sprite['deaths'] + 5):
                             self.delSpriteMarqueeText(sprite)
                             sprite['health'] = 100
                             sprite['life'] = 1

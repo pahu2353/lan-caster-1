@@ -317,7 +317,9 @@ class ServerMap(engine.stepmap.StepMap):
             else:
                 self.setSpriteActionText(sprite, f"")
 
+  
     def triggerStructure(self, attackableTrigger, sprite):
+
         reset = sprite['cooldown']
 
         if "attacked" not in sprite:
@@ -332,18 +334,17 @@ class ServerMap(engine.stepmap.StepMap):
                             attackableTrigger['attackableSprite']['health'] = 0
 
                         if attackableTrigger['attackableSprite']['type'] == "structure":
+                            if (attackableTrigger['attackableSprite']['name'] == "nexus"):
+                                    if attackableTrigger['attackableSprite']['health'] <= 0:
+                                        engine.server.quit()
+
                             if attackableTrigger['attackableSprite']['health'] <= 0:
-                                    sprt = self.getLeader(attackableTrigger)
-                                    for i in range(len(self['sprites'])):
-                                        if self['sprites'][i] == sprt:
-                                            self.removeObject(sprt, objectList=self['sprites'])
-                                #self.removeObject(attackableTrigger['attackableSprite'])
-                          
+                            
+                                self.removeObject(attackableTrigger['attackableSprite'])
+                           
                                 
    
                     
-
-                    print ("i just attacked a tower!") 
                     
                     sprite['cooldown'] = time.perf_counter()
         
@@ -385,13 +386,7 @@ class ServerMap(engine.stepmap.StepMap):
                 if sprite['health'] <= 0:
                     self.removeObject(sprite)
 
-
-
-        sprt = self.getLeader(attackableTrigger)
-        for i in range(len(self['sprites'])):
-            if self['sprites'][i] == sprt:
-                self.removeObject(sprt, objectList=self['sprites'])
-        #self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
+        self.removeObjectFromAllLayers(attackableTrigger['attackableSprite'])
         attackableTrigger['attackableSprite']['health'] = -1
 
 
