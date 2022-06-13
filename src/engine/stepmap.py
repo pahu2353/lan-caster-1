@@ -212,8 +212,6 @@ class StepMap(engine.map.Map):
     ########################################################
 
     def stepMap(self):
-        boontom = False
-        boonop = False
         """Move the map forward one step in time"""
 
         startTime = time.perf_counter()
@@ -246,11 +244,7 @@ class StepMap(engine.map.Map):
                 else:
                     sprite['health'] = 100 
             
-            if sprite['type'] == "structure" and not(sprite['name'] == 'nexus') and sprite['team'] == 'bottom':
-                boontom = True
-            elif sprite['type'] == "structure" and not(sprite['name'] == 'nexus') and sprite['team'] == 'top':
-                boonop = True
-            else  
+            if (sprite['type'] == "structure"):
             
                 if "health" in sprite:
                     self.setSpriteSpeechText(sprite, str(sprite['health']))
@@ -300,10 +294,6 @@ class StepMap(engine.map.Map):
                         # make player not move when dead
                         # add health bar
                         # add countdown timer to playerdeath
-
-        if boontom == False:
-            
-        
 
         # call all selfstepMove*(sprite) methods for each sprite
         # with a corresponding sprite['move']['type']
