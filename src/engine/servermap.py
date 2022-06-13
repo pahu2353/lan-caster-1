@@ -329,7 +329,7 @@ class ServerMap(engine.stepmap.StepMap):
                     if attackableTrigger['attackableSprite']['health'] > 0 and sprite['health'] > 0 and sprite['team'] != attackableTrigger['attackableSprite']['team']:
 
                         # damage adjustments
-                        attackableTrigger['attackableSprite']['health'] -= 100
+                        attackableTrigger['attackableSprite']['health'] -= 50
                         if attackableTrigger['attackableSprite']['health'] <= 0:
                             attackableTrigger['attackableSprite']['health'] = 0
 
@@ -343,7 +343,7 @@ class ServerMap(engine.stepmap.StepMap):
 
                                         for sprite in self['sprites']:
                                                 self.setSpriteMarqueeText(sprite,
-                                              f"Team " + winner + " has destroyed the nexus and won the game! Congratulations! The game will close in 5 seconds.")
+                                              f"Team " + winner + " has destroyed the nexus and won the game! Congratulations!")
                                                 sprite['gameOver'] = time.perf_counter() + 5     
                                                 
                                    
@@ -369,6 +369,9 @@ class ServerMap(engine.stepmap.StepMap):
                 # turret damage
                 sprite['health'] -= 10
                 attackableTrigger['attackableSprite']['cooldown'] = time.perf_counter()
+                
+                if sprite['type'] == "player" and sprite['health'] <= 0:
+                    sprite['deaths'] += 1
 
             # damage done to turret via bullet
             if sprite['type'] == "hehe":
@@ -403,7 +406,7 @@ class ServerMap(engine.stepmap.StepMap):
 
                         for sprite in self['sprites']:
                             self.setSpriteMarqueeText(sprite,
-                                f"Team " + winner + " has destroyed the nexus and won the game! Congratulations!  The game will close in 5 seconds.")
+                                f"Team " + winner + " has destroyed the nexus and won the game! Congratulations!")
                             sprite['gameOver'] = time.perf_counter() + 5               
                 
                                 
@@ -874,7 +877,7 @@ class ServerMap(engine.stepmap.StepMap):
         'name': name,
         'prop-maxX': 276,
         'prop-minX': 80,
-        'prop-speed': 100,
+        'prop-speed': 50,
         'tilesetName': 'shuriken',
         'tilesetTileNumber': 0,
         'type': 'hehe',
@@ -912,7 +915,7 @@ class ServerMap(engine.stepmap.StepMap):
         'name': name,
         'prop-maxX': 276,
         'prop-minX': 80,
-        'prop-speed': 100,
+        'prop-speed': 50,
         'tilesetName': 'shuriken',
         'tilesetTileNumber': 0,
         'type': 'hehe',

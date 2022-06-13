@@ -252,7 +252,7 @@ class StepMap(engine.map.Map):
                         self.removeObjectFromAllLayers(sprite)
                         
                 else:
-                    sprite['health'] = 1000 
+                    sprite['health'] = 500 
 
             if (sprite['name'] == "nexus"):
                 if sprite['gameOver'] <  time.perf_counter():
@@ -283,7 +283,7 @@ class StepMap(engine.map.Map):
                     if sprite['life'] == 1:
                         sprite['life'] = 0
                         sprite['respawnTime'] = time.perf_counter()
-                        self.setSpriteMarqueeText(sprite, f"You Have Died; Respawning in " + str(sprite['deaths'] + 5) + " seconds")
+                        self.setSpriteMarqueeText(sprite, f"You Have Died; Respawning in " + str(sprite['deaths'] + 4) + " seconds")
                     elif sprite['life'] == 0:
                         if time.perf_counter() - respawnTime > (sprite['deaths'] + 5):
                             self.delSpriteMarqueeText(sprite)
