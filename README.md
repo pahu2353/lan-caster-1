@@ -1,3 +1,17 @@
+Added Features:
+* 1v1 Capability (melee/close-range attacks, and long-range attacks)
+* Projectiles
+* Dynamic health bar
+* Turrets that damage players
+* Camera that follows player movement
+* Respawning
+* Kill/death stats
+* Healing functionality
+* Death disincentive
+* Sprite animations
+
+Below is the original README from LAN-Caster.
+
 [ **ABOUT** | [SETUP and RUN](SETUP.md) | [CREATE A GAME](CREATE.md) | [TUTORIALS](TUTORIALS.md) | [CONTRIBUTING](CONTRIBUTING.md) ]
 
 # LAN-Caster - About
