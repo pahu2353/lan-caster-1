@@ -1,4 +1,4 @@
-Added Features:
+Added Features in AP Computer Science:
 * 1v1 Capability (melee/close-range attacks, and long-range attacks)
 * Projectiles
 * Dynamic health bar
